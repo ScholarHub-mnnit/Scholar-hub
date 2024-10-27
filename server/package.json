@@ -2,9 +2,11 @@
   "name": "scholar-hub",
   "version": "1.0.0",
   "description": "backened of scholar hub",
+  "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,8 @@
   },
   "homepage": "https://github.com/ScholarHub-mnnit/Scholar-hub#readme",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mongoose": "^8.7.3",
+    "morgan": "^1.10.0"
   }
 }
