@@ -1,8 +1,24 @@
+import mongoose from 'mongoose';
 import app from './app.js';
-const port = 8000;
+import dotenv from 'dotenv';
+
+dotenv.config({ path: './.env' });
+
+// const port = 8000;
+const port = process.env.PORT || 6000;
+
+// console.log(process.env.CONN_STR);
+
+mongoose
+  .connect(process.env.CONN_STR)
+  .then(() => {
+    console.log('Created database succesfully');
+  })
+  .catch((error) => {
+    console.log(`DB Cconnection failed due to ${error}`);
+  });
 
 app.get('/', (req, res) => {
-  console.log('Welcome');
   res.send('WELCOME TO MY SCHOLAR HUB SITE');
 });
 
