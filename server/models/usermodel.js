@@ -62,6 +62,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// comparePassword Method: This method should not be wrapped with asynchandler. It's a method of your Mongoose model, and it should be invoked directly.
+
+// Using next in Non-Middleware Context: The next function is specific to Express middleware. When you call comparePassword, it should not expect next to be passed.
+
 userSchema.methods.comparepassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
