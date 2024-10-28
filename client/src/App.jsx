@@ -1,12 +1,20 @@
-import { useState } from 'react'
-import Home from './pages/Home'
+import { Home,  Layout, Login, NotFound, Signup } from './pages'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className='w-full min-h-screen'>
-      <Home/>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Layout/>}>
+            <Route path='' element={<Home/>}/>
+            <Route path='signup' element={<Signup/>}/>
+            <Route path='login' element={<Login/>}/>
+          </Route>
+          <Route path='*' element={<NotFound/>}/>
+        </Routes>
+      </Router>
   </div>
   )
 }
