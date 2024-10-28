@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 
-// router.post('/login', login);
 // router.patch('/update', update);
 // router.post('/forgotpassword', forgotpassword);
 // router.get('/logout', logout);

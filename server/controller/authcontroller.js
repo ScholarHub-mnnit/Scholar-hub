@@ -17,7 +17,8 @@ const createrefreshandacesstoken = (id) => {
 
 export const signup = asynchandler(async (req, res, next) => {
   const { name, email, password, username, college, branch, year } = req.body;
-  const user = (await User.findOne(username)) || (await User.findOne(email));
+  const user =
+    (await User.findOne({ username })) || (await User.findOne({ email }));
   if (user) {
     return next(new ApiError('User are already exist', 404));
   }
@@ -46,6 +47,40 @@ export const signup = asynchandler(async (req, res, next) => {
     data: {
       acesstoken,
       refreshtoken,
+    },
+  });
+});
+
+export const login = asynchandler(async (req, res, next) => {
+  const { email, username, password } = req.body;
+
+  if (!email && !username) {
+    return next(new ApiError('Please enter email or username', 400));
+  }
+
+  if (!password) {
+    return next(new ApiError('Please Enter the password', 400));
+  }
+
+  const requser =
+    (await User.findOne({ email }).select('+password')) ||
+    (await User.findOne({ username }).select('+password'));
+
+  if (!requser) {
+    return next(
+      new ApiError('User Not found Please Enter valid email or Username', 400)
+    );
+  }
+
+  if (!(await requser.comparepassword(password))) {
+    console.log(requser);
+    return next(new ApiError('Password is incorrect', 400));
+  }
+
+  res.status(201).json({
+    message: 'User login succesfully',
+    data: {
+      user: requser,
     },
   });
 });
