@@ -39,6 +39,20 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  college: {
+    type: String,
+    require: [true, 'Please enter the college'],
+  },
+  year: {
+    type: Number,
+    require: [true, 'Please enter the Batch year'],
+  },
+  branch: {
+    type: String,
+    require: [true, 'Please enter the branch'],
+  },
 });
 
 const User = mongoose.model('User', userSchema);
+
+export default User;
