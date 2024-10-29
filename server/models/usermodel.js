@@ -52,6 +52,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: [true, 'Please enter the branch'],
   },
+
+  passwordchangedat: Date,
+
   courses: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -73,6 +76,7 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);
   this.confirm_password = undefined;
+  this.passwordchangedat = Date.now();
   next();
 });
 
@@ -82,6 +86,11 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.comparepassword = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.ispasswordchanged = async function (jwttimestamp) {
+  console.log(this.passwordchangedat.getTime());
+  return parseInt(this.passwordchangedat.getTime()) > jwttimestamp * 1000;
 };
 const User = mongoose.model('User', userSchema);
 

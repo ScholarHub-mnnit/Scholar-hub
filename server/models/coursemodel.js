@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 
 const courseSchema = new mongoose.Schema({
   name: {
-    type: string,
+    type: String,
     require: [true, 'Please enter the subject name'],
-    unique: [true, 'Course already exist'],
+    // unique: [true, 'Course already exist'],
   },
   coursecode: {
-    type: string,
+    type: String,
     require: [true, 'Please enter the subject code'],
+    unique: [true, 'Course already exist'],
   },
   credit: {
     type: Number,
@@ -18,8 +19,12 @@ const courseSchema = new mongoose.Schema({
   },
   task: [
     {
-      tpye: mongoose.Schema.Types.ObjectId,
-      ref: 'Tasks',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Task',
     },
   ],
 });
+
+const Course = mongoose.model('Course', courseSchema);
+
+export default Course;

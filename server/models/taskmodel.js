@@ -11,14 +11,14 @@ const taskSchema = new mongoose.Schema({
     min: 1,
   },
   chaptername: {
-    type: string,
+    type: String,
   },
   reward_point: {
     type: Number,
     default: 0,
   },
   duration: {
-    type: date,
+    type: Date,
   },
   iscompleted: {
     type: Boolean,
