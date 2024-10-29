@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
-import asynchandler from '../utils/asynchandler.js';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
@@ -52,6 +51,21 @@ const userSchema = new mongoose.Schema({
   branch: {
     type: String,
     require: [true, 'Please enter the branch'],
+  },
+  courses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+    },
+  ],
+  rewardpoint: {
+    type: Number,
+    default: 0,
+  },
+  acheivement: [],
+  task: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Task',
   },
 });
 
