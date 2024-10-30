@@ -49,10 +49,10 @@ function Header() {
         {
           status && <div className='w-1/2 hidden sm:block'>
             <ul className='flex  gap-1 md:gap-4'>
-              <Link to="/leaderboard"><li className='font-semibold px-2 rounded text-white dark:text-gray-400 '>Leaderboard</li></Link>
-              <Link to="/schedule"><li className='font-semibold px-2 rounded text-white dark:text-gray-400 '>Schedule</li></Link>
-              <Link to="/goals"><li className='font-semibold px-2 rounded text-white dark:text-gray-400 '>Goals</li></Link>
-              <Link to="/rewards"><li className='font-semibold px-2 rounded text-white dark:text-gray-400 '>Rewards</li></Link>
+              <Link to="/leaderboard"><li className='hover:border-b-2 dark:border-gray-600 font-semibold px-2 rounded text-white dark:text-gray-400 '>Leaderboard</li></Link>
+              <Link to="/schedule"><li className='hover:border-b-2 dark:border-gray-600 font-semibold px-2 rounded text-white dark:text-gray-400 '>Schedule</li></Link>
+              <Link to="/goals"><li className='hover:border-b-2 dark:border-gray-600 font-semibold px-2 rounded text-white dark:text-gray-400 '>Goals</li></Link>
+              <Link to="/rewards"><li className='hover:border-b-2 dark:border-gray-600 font-semibold px-2 rounded text-white dark:text-gray-400 '>Rewards</li></Link>
             </ul>
           </div>
         }

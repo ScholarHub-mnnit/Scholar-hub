@@ -6,9 +6,14 @@ import Signup from "./Signup";
 import Dashboard from "./Dashboard";
 import Goals from './Goals';
 import Leaderboard from './Leaderboard';
-import Profile from './Profile'
-import Rewards from './Rewards'
-import Schedule from './Schedule'
+import Profile from './Profile';
+import Rewards from './Rewards';
+import Schedule from './Schedule';
+import Courses from './Courses';
+import Assignments from './Assignments';
+import Lectures from './Lectures'
+import Projects from "./Projects";
+import Achievements from './Achievements'
 
 export {
     Home,
@@ -21,5 +26,11 @@ export {
     Leaderboard,
     Profile,
     Rewards,
-    Schedule
+    Schedule,
+    Courses,
+    Assignments,
+    Lectures,
+    Projects,
+    Achievements,
+    
 }
