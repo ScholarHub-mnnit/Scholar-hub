@@ -72,7 +72,7 @@ function Form({label='Sign Up',apiToSendData}) {
             {errors && errors?.college && errors.college?.message.length>0 && <p className=' mb-2 text-center text-md text-red-600'>{errors.college.message}</p>}
             </div>
             <div>
-            <Input label={"Password"} placeholder={"Your password..."} {...register("password", {
+            <Input label={"Password"} type="password" placeholder={"Your password..."} {...register("password", {
                         required: "Password is required",
                         pattern: {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -82,7 +82,7 @@ function Form({label='Sign Up',apiToSendData}) {
             {errors && errors?.password && errors.password?.message.length>0 && <p className=' mb-2 text-center text-md text-red-600'>{errors.password.message}</p>}
             </div>
             <div>
-            <Input label={"Confirm Password"} placeholder={"Confirm password..."} {...register("confirmpassword", { 
+            <Input label={"Confirm Password"} type="password" placeholder={"Confirm password..."} {...register("confirmpassword", { 
                             required: "Confirm Password is required", 
                             validate: (value) => value === watch("password") || "Passwords do not match"
                         })}/>

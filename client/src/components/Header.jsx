@@ -26,7 +26,7 @@ function Header() {
   const handleMenus = (e) => {
     if (!profileRef?.current.contains(e.target)) {
       setMenu(false);
-      console.log("close")
+      // console.log("close")
     }
   }
 
