@@ -89,8 +89,9 @@ userSchema.methods.comparepassword = async function (password) {
 };
 
 userSchema.methods.ispasswordchanged = async function (jwttimestamp) {
-  console.log(this.passwordchangedat.getTime());
-  return parseInt(this.passwordchangedat.getTime()) > jwttimestamp * 1000;
+  // console.log(this.passwordchangedat.getTime());
+  // console.log(jwttimestamp * 1000);
+  return parseInt(this.passwordchangedat.getTime() / 1000) > jwttimestamp;
 };
 const User = mongoose.model('User', userSchema);
 

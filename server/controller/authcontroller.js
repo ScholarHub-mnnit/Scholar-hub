@@ -37,7 +37,7 @@ export const signup = asynchandler(async (req, res, next) => {
     year,
   });
 
-  console.log(newuser);
+  // console.log(newuser);
 
   const { acesstoken, refreshtoken } = createrefreshandacesstoken(newuser.id);
 
@@ -76,7 +76,7 @@ export const login = asynchandler(async (req, res, next) => {
   }
 
   if (!(await requser.comparepassword(password))) {
-    console.log(requser);
+    // console.log(requser);
     return next(new ApiError('Password is incorrect', 400));
   }
 
@@ -110,11 +110,11 @@ export const protect = asynchandler(async (req, res, next) => {
     refreshtoken = req.cookies.refreshtoken;
   }
 
-  console.log(refreshtoken);
+  // console.log(refreshtoken);
 
-  console.log('Hello');
+  // console.log('Hello');
 
-  console.log(acesstoken);
+  // console.log(acesstoken);
 
   if (!acesstoken || !refreshtoken) {
     return next(new ApiError('You have to login again or sign up', 400));
@@ -125,7 +125,7 @@ export const protect = asynchandler(async (req, res, next) => {
     process.env.ACESS_TOKEN_STRING
   );
 
-  console.log(decodedtoken);
+  // console.log(decodedtoken);
 
   if (!decodedtoken) {
     decodedtoken = await promisify(jwt.verify)(
@@ -139,7 +139,7 @@ export const protect = asynchandler(async (req, res, next) => {
   }
 
   const user = await User.findById(decodedtoken.id);
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     next(new ApiError('User not found', 400));

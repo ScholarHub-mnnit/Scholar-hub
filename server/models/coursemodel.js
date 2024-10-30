@@ -9,7 +9,7 @@ const courseSchema = new mongoose.Schema({
   coursecode: {
     type: String,
     require: [true, 'Please enter the subject code'],
-    unique: [true, 'Course already exist'],
+    // unique: [true, 'Course already exist'],
   },
   credit: {
     type: Number,
@@ -23,6 +23,10 @@ const courseSchema = new mongoose.Schema({
       ref: 'Task',
     },
   ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 const Course = mongoose.model('Course', courseSchema);
