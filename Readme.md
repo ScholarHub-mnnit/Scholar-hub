@@ -1,5 +1,6 @@
 # Scholar-Hub
 
+
 ## Abstract
 
 This project involves the development of a website designed to track academic and other goals. 
