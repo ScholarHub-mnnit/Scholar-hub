@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
   tasktype: {
     type: String,
     enum: ['Assignment', 'Lectures', 'Project'],
@@ -20,9 +27,9 @@ const taskSchema = new mongoose.Schema({
   duration: {
     type: Date,
   },
-  iscompleted: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    enum: ['Completed', 'Pending'],
   },
   setgoal: {
     type: Boolean,
@@ -35,6 +42,15 @@ const taskSchema = new mongoose.Schema({
   },
   deadline: {
     type: Date,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+
+  createdat: {
+    type: String,
+    default: Date.now(),
   },
 });
 

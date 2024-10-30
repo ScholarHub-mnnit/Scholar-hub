@@ -47,10 +47,6 @@ export const signup = asynchandler(async (req, res, next) => {
 
   res.status(201).json({
     message: 'User Account created Succesfully',
-    data: {
-      acesstoken,
-      refreshtoken,
-    },
   });
 });
 
@@ -85,6 +81,8 @@ export const login = asynchandler(async (req, res, next) => {
   if (!acesstoken || !refreshtoken) {
     return next(new ApiError('Token cannot generated', 402));
   }
+
+  delete requser.password;
 
   res.status(201).json({
     message: 'User login succesfully',
@@ -153,4 +151,3 @@ export const protect = asynchandler(async (req, res, next) => {
 
   next();
 });
-// req.user=user
