@@ -8,7 +8,7 @@ import courseroute from './router/courserouter.js';
 import taskroute from './router/taskrouter.js';
 import { protect } from './controller/authcontroller.js';
 const app = express();
-app.use()
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
