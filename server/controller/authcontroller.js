@@ -95,6 +95,8 @@ export const login = asynchandler(async (req, res, next) => {
 });
 
 export const protect = asynchandler(async (req, res, next) => {
+  console.log('Protect middleware iss invoked');
+
   const test_token = req.headers.authorization;
 
   // console.log(req.headers.authorization);
