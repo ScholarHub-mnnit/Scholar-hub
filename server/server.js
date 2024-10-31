@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 import app from './app.js';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: './.env' });
+dotenv.config({ path: './sample.env' });
 
 // const port = 8000;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
 // console.log(process.env.CONN_STR);
 
