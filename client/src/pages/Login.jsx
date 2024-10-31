@@ -5,11 +5,13 @@ import authService from '../api/authApiService';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/userSlice';
 import Loading from '../components/Loading';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState(false);
   const dispatch=useDispatch();
+  const navigate=useNavigate();
   const { register, handleSubmit, formState: { errors }, } = useForm({
     defaultValues: {
       email: "",
@@ -24,6 +26,7 @@ function Login() {
       const res=await authService.login(data);
       if(res){
         dispatch(login(res));
+        navigate("/dashboard");
       }
 
     } catch (error) {

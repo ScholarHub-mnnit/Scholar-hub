@@ -56,9 +56,9 @@ function Dashboard() {
           <div className=''>
                 {/* <h1 className='text-center'>Welcome</h1> */}
                 <div>
-                  <Table title={"Upcoming Events"} graph={false} keys={events.keys} data={events.data} />
-                  <Table title={"Current Courses"} add={"/courses"} keys={courses.keys} data={courses.data}/>
-                  <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data}/>
+                  <Table title={"Upcoming Events"} graph={false} keys={events.keys} data={events.data}/>
+                  <Table title={"Current Courses"} add={"/courses"} keys={courses.keys} data={courses.data} label={"title"} value={"credits"}/>
+                  <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data} label={"title"} value={"points"}/>
                 </div>
           </div>
           <Quote />

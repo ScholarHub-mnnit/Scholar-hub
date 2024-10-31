@@ -6,12 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/userSlice'
 import { TbLogout } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
+import userService from '../api/userApiService';
 
 function Header() {
   const [menu, setMenu] = useState(false);
   const profileRef = useRef();
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.user)
+  const { user, status } = useSelector((state) => state.user)
   const navigate = useNavigate();
   const location = useLocation();
   const handleStart = () => {
@@ -37,9 +38,13 @@ function Header() {
     };
   }, []);
 
-  const logout = () => {
+  const signout = async () => {
     console.log("logout");
-    //logout()
+    const res=await userService.logout(user);
+    if(res){
+      dispatch(logout());
+      navigate('/');
+    }
   }
 
   return (
@@ -75,7 +80,7 @@ function Header() {
                   <ul className='flex flex-col gap-2 justify-start'>
                     <li className='cursor-pointer hover:bg-neutral-700 px-2 py-1 rounded-md flex items-center'><CgProfile className='text-lg mr-2' />Profile</li>
                     <li className='cursor-pointer hover:bg-neutral-700 px-2 py-1 rounded-md flex items-center '
-                    onClick={logout}><TbLogout className='text-lg mr-2' />Log out</li>
+                    onClick={signout}><TbLogout className='text-lg mr-2' />Log out</li>
                   </ul>
                 </div>
               </div>}

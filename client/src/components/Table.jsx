@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import PieChart from './ChartComp';
 
-function Table({ title ,graph=true, keys=[] ,add="", data=[]}) {
+function Table({ title ,graph=true, keys=[] ,add="", data=[],label,value}) {
     return (
         <div className="my-3 py-2 px-3 border dark:border-slate-800 rounded">
             <div className='flex justify-between items-center mb-2'><h1 className="ml-2 text-blue-400 dark:text-gray-400 text-2xl font-bold ">{title}</h1>
@@ -26,10 +27,8 @@ function Table({ title ,graph=true, keys=[] ,add="", data=[]}) {
                 </div>:
                 <h1 className='text-center'>No Data Found!</h1>}
                 {graph && keys.length>0 && <div className='graph'>
-                    <div className='w-full flex justify-center items-center my-auto'>
-                        <div  className='rounded-full w-40 aspect-square bg-red-400 flex justify-center items-center'>
-                        Graph
-                        </div>
+                    <div className='w-full  py-2 flex justify-center items-center'>
+                        <PieChart info={data} label={label} value={value}/>
                     </div>
                 </div>}
             </div>

@@ -4,8 +4,8 @@ import { baseUrl } from './baseUrl'
 class ApiService{
     constructor(baseUrl) {
         this.api = axios.create({
-          baseURL: baseUrl,
-          timeout: 10000,
+          baseURL: baseUrl+"auth/",
+          timeout: 5000,
     });
     }
 
