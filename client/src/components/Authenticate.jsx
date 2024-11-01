@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 
 
 export default function Auth({children,authentication=true}) {
+    return <>{children}</>;
     const navigate = useNavigate()
     const [loading,setLoading] = useState(true)
     const status= useSelector(state => state.user.status)

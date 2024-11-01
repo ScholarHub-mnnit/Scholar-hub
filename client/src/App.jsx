@@ -1,5 +1,5 @@
 import Auth from './components/Authenticate'
-import { Achievements, Assignments, Courses, Dashboard, Goals, Home,  Layout, Leaderboard, Lectures, Login, NotFound, Projects, Rewards, Schedule, Signup } from './pages'
+import { Achievements, Assignments, Courses, Dashboard, ForPassword, Goals, Home,  Layout, Leaderboard, Lectures, Login, NotFound, Projects, Rewards, Schedule, Signup } from './pages'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
             <Route path='' element={<Auth authentication={false}><Home/></Auth>}/>
             <Route path='signup' element={<Auth authentication={false}><Signup/></Auth>}/>
             <Route path='login' element={<Auth authentication={false}><Login/></Auth>}/>
+            <Route path='forgot-password' element={<Auth authentication={false}><ForPassword/></Auth>}/>
             <Route path='dashboard' element={<Auth><Dashboard/></Auth>}/>
             <Route path='leaderboard' element={<Auth><Leaderboard/></Auth>}/>
             <Route path='schedule' element={<Auth><Schedule/></Auth>}/>

@@ -13,13 +13,15 @@ import Courses from './Courses';
 import Assignments from './Assignments';
 import Lectures from './Lectures'
 import Projects from "./Projects";
-import Achievements from './Achievements'
+import Achievements from './Achievements';
+import ForPassword from "./ForPassword";
 
 export {
     Home,
     Layout,
     NotFound,
     Login,
+    ForPassword,
     Signup,
     Dashboard,
     Goals,

@@ -8,7 +8,7 @@ const Input = React.forwardRef(({ label, placeholder, type = "text",
         const [isvisible,setIsvisible]=useState(false);
     return (
         <div className='mb-2 w-full flex justify-between items-end'>
-            <div><label htmlFor={label} className="block text-gray-900 dark:text-gray-400 text-md font-bold mb-2 text-nowrap">
+            <div><label htmlFor={label} className="block mx-2 text-gray-900 dark:text-gray-400 text-md font-bold mb-2 text-nowrap">
                 {label}:
             </label>
             </div>
@@ -21,7 +21,7 @@ const Input = React.forwardRef(({ label, placeholder, type = "text",
                 placeholder={placeholder} 
                 {...props}
             />
-            {type==="password" && <span className='px-2 absolute right-1' onClick={()=>setIsvisible((p)=>!p)}>{isvisible?<IoMdEyeOff />:<FaEye />}</span>}
+            {type==="password" && <span className='px-2 absolute right-1 cursor-pointer' onClick={()=>setIsvisible((p)=>!p)}>{isvisible?<IoMdEyeOff />:<FaEye />}</span>}
             </div>
         </div>
     );

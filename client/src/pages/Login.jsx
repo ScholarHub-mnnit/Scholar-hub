@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import Input from '../components/Input'
+import Input from '../components/Input';
 import authService from '../api/authApiService';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/userSlice';
 import Loading from '../components/Loading';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
   const [loading,setLoading] = useState(false);
@@ -59,6 +59,9 @@ function Login() {
                   required: "Password is required!",
                 })} />
                 {errors && errors?.password && errors.password?.message.length > 0 && <p className=' mb-2 text-center text-md text-red-600'>{errors.password.message}</p>}
+              </div>
+              <div className='flex justify-end'>
+                <Link to={"/forgot-password"}><p className='text-blue-600 text-sm font-semibold'>Forget Password!</p></Link>
               </div>
             </div>
             <div>
