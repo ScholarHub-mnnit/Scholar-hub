@@ -18,6 +18,5 @@ router.post('/add', addcourse);
 router.patch('/update/:id', updatecourse);
 router.delete('/delete/:id', delcourse);
 router.delete('/deleteall', deleteall);
-router.post('/:id/task', taskrouter);
-
+router.use('/:id/task', taskrouter);
 export default router;
