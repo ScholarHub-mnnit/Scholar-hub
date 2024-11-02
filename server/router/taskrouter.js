@@ -1,5 +1,10 @@
 import express from 'express';
-import { getall, addtask } from '../controller/taskcontroller.js';
+import {
+  getall,
+  addtask,
+  updatetask,
+  deltask,
+} from '../controller/taskcontroller.js';
 
 const router = express.Router();
 
