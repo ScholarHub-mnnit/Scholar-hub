@@ -66,12 +66,13 @@ const userSchema = new mongoose.Schema({
     default: 0,
   },
   acheivement: [],
-  task: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Task',
-  },
+  task: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Task',
+    },
+  ],
 });
-
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 12);

@@ -8,9 +8,9 @@ export const getcourse = asynchandler(async (req, res, next) => {
   const course_id = req.params.id;
 
   // console.log(course_id);
-  const findcourse = await Course.findOne({ _id: course_id }).populate('task');
+  const findcourse = await Course.findOne({ _id: course_id });
 
-  if (!finduser) {
+  if (!findcourse) {
     return next(new ApiError('course not found please update', 302));
   }
 

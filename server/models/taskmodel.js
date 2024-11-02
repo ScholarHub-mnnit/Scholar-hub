@@ -29,7 +29,8 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Completed', 'Pending'],
+    enum: ['Completed', 'Pending', 'OverDue'],
+    default: 'Pending',
   },
   setgoal: {
     type: Boolean,
