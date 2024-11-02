@@ -92,3 +92,63 @@ export const addtask = asynchandler(async (req, res, next) => {
     message: 'task add sucessfully',
   });
 });
+
+export const updatetask = asynchandler(async (req, res, next) => {
+  const id = req.params.id;
+
+  const reqtask = await Task.findById(id);
+
+  if (!reqtask) {
+    return next(new ApiError('Task is not found'), 300);
+  }
+
+  const {
+    title,
+    description,
+    tasktype,
+    chapterno,
+    chaptername,
+    setgoal,
+    goaltype,
+    deadline,
+    duration,
+  } = req.body;
+
+  const updatedTask = await Task.findByIdAndUpdate(
+    id,
+    {
+      title,
+      description,
+      tasktype,
+      chapterno,
+      chaptername,
+      setgoal,
+      goaltype,
+      deadline,
+      duration,
+    },
+    { new: true }
+  );
+
+  res.status(201).json({
+    message: 'Task Updated Sucessfully',
+    data: {
+      updatedTask,
+    },
+  });
+});
+export const deltask = asynchandler(async (req, res, next) => {
+  const id = req.params;
+
+  const reqtask = await Task.findById(id);
+
+  if (!reqtask) {
+    next(new ApiError('Task Cannot FOund', 300));
+  }
+
+  const deletedTask = await Task.findByIdAndDelete(id);
+
+  res.status(201).json({
+    message: 'Task Deleted Sucessfully',
+  });
+});

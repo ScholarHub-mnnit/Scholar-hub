@@ -1,4 +1,5 @@
 import Course from '../models/coursemodel.js';
+import Task from '../models/taskmodel.js';
 import User from '../models/usermodel.js';
 import ApiError from '../utils/apierror.js';
 import asynchandler from '../utils/asynchandler.js';
@@ -121,6 +122,9 @@ export const delcourse = asynchandler(async (req, res, next) => {
   if (!findcourse) {
     return next(new ApiError('Can,t delete the course try again', 302));
   }
+  const taskIds = findcourse.task;
+  await Task.deleteMany({ _id: { $in: taskIds } });
+  findcourse.task = [];
 
   const coursedeletd = await Course.findOneAndDelete({ _id: course_id });
 
@@ -131,6 +135,7 @@ export const delcourse = asynchandler(async (req, res, next) => {
     },
   });
 });
+
 export const deleteall = asynchandler(async (req, res, next) => {
   const id = req.user._id;
   // console.log(req.user);
@@ -141,10 +146,16 @@ export const deleteall = asynchandler(async (req, res, next) => {
   if (!finduser) {
     return next(new ApiError("Can't delete all the subject", 302));
   }
+  const allcourses = finduser.courses;
 
-  await Course.deleteMany({ _id: { $in: finduser.courses } });
+  const taskIds = allcourses.flatMap((course) => course.task);
+
+  await Task.deleteMany({ _id: { $in: taskIds } });
+
+  await Course.deleteMany({ user: finduser._id });
 
   finduser.courses = [];
+
   await finduser.save();
 
   res.status(200).json({
