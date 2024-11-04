@@ -155,6 +155,8 @@ export const updatetask = asynchandler(async (req, res, next) => {
       ? (addrewarduser.rewardpoint =
           addrewarduser.rewardpoint + fixedpoint + varpoint * variable)
       : (addrewarduser.rewardpoint = fixedpoint / 2);
+
+    addrewarduser.save();
   }
 
   if (setgoal && !prevgoal) {
@@ -166,6 +168,7 @@ export const updatetask = asynchandler(async (req, res, next) => {
     else point = 20;
 
     addrewarduser.rewardpoint = addrewarduser.rewardpoint + point;
+    addrewarduser.save();
   }
 
   res.status(201).json({
