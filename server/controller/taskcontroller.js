@@ -112,7 +112,10 @@ export const updatetask = asynchandler(async (req, res, next) => {
     goaltype,
     deadline,
     duration,
+    status,
   } = req.body;
+  const prevstatus = reqtask.status;
+  const prevgoal = reqtask.setgoal;
 
   const updatedTask = await Task.findByIdAndUpdate(
     id,
@@ -129,6 +132,41 @@ export const updatetask = asynchandler(async (req, res, next) => {
     },
     { new: true }
   );
+
+  if (status && status === 'Completed' && prevstatus === 'Pending') {
+    const id = req.user._id;
+    const addrewarduser = await User.findById(id);
+    let fixedpoint, varpoint;
+    if (tasktype === 'Assignment') {
+      fixedpoint = 70.0;
+      varpoint = 1.0;
+    } else if (tasktype === 'Project') {
+      fixedpoint = 150.0;
+      varpoint = 1.5;
+    } else {
+      fixedpoint = 50.0;
+      varpoint = 1.0;
+    }
+    const istOffset = 5.5 * 60 * 60 * 1000;
+    const newdeadline = new Date(updatedTask.deadline - istOffset).getTime();
+    const newDate = new Date(Date.now()).getTime();
+    const variable = (newdeadline - newDate) / (1000 * 3600);
+    variable > fixedpoint / 2
+      ? (addrewarduser.rewardpoint =
+          addrewarduser.rewardpoint + fixedpoint + varpoint * variable)
+      : (addrewarduser.rewardpoint = fixedpoint / 2);
+  }
+
+  if (setgoal && !prevgoal) {
+    const id = req.user._id;
+    const addrewarduser = await User.findById(id);
+
+    let point = 0;
+    if (goaltype === 'Daily') point = 60;
+    else point = 20;
+
+    addrewarduser.rewardpoint = addrewarduser.rewardpoint + point;
+  }
 
   res.status(201).json({
     message: 'Task Updated Sucessfully',
