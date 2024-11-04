@@ -4,11 +4,19 @@ import TableHead from '../components/TableHead'
 import { assignment } from '../Data/assignment'
 
 function Assignments() {
+  const deleteAssignment=async()=>{
+    //delete code
+  }
+
+  const editAssignment=async()=>{
+    //edit code
+  }
+
   return (
     <div className=''>
       <TaskForm task={"Assignment"} content={"Assignment"}/>
       <div className="data">
-        <TableHead keys={assignment?.keys} list={assignment?.data} title={"Assignments"}/>
+        <TableHead keys={assignment?.keys} list={assignment?.data} title={"Assignments"} delFunction={deleteAssignment} editFunction={editAssignment}/>
       </div>
     </div>
   )

@@ -6,6 +6,7 @@ class UserService{
         this.api = axios.create({
           baseURL: baseUrl+"user/",
           timeout: 5000,
+          withCredentials: true,
     });
     }
 

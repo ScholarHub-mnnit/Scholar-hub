@@ -1,55 +1,60 @@
 export const courses={
     keys:[
-        "title",
-        "duration",
-        "instructor",
-        "credits",
+        "name",
+        "coursecode",
+        // "instructor",
+        "credit",
     ],
 
     data: [
         {
             "id": 1,
-            "title": "Introduction to Computer Science",
+            "name": "Introduction to Computer Science",
+            "coursecode": "CS101",
             "duration": "12 weeks",
             "instructor": "Dr. Alice Smith",
             "level": "Beginner",
-            "credits": 3,
+            "credit": 3,
             "description": "An introductory course on computer science concepts and programming."
         },
         {
             "id": 2,
-            "title": "Advanced Web Development",
+            "name": "Advanced Web Development",
+            "coursecode": "CS102",
             "duration": "8 weeks",
             "instructor": "Prof. John Doe",
             "level": "Advanced",
-            "credits": 4,
+            "credit": 4,
             "description": "A comprehensive course on modern web development techniques."
         },
         {
             "id": 3,
-            "title": "Data Science Fundamentals",
+            "name": "Data Science Fundamentals",
+            "coursecode": "DS201",
             "duration": "10 weeks",
             "instructor": "Dr. Emily Johnson",
             "level": "Intermediate",
-            "credits": 3,
+            "credit": 3,
             "description": "Learn the basics of data science, including data analysis and visualization."
         },
         {
             "id": 4,
-            "title": "Machine Learning Basics",
+            "name": "Machine Learning Basics",
+            "coursecode": "ML201",
             "duration": "14 weeks",
             "instructor": "Dr. Michael Brown",
             "level": "Intermediate",
-            "credits": 4,
+            "credit": 4,
             "description": "An overview of machine learning techniques and applications."
         },
         {
             "id": 5,
-            "title": "Digital Marketing Strategies",
+            "name": "Digital Marketing Strategies",
+            "coursecode": "DMS01",
             "duration": "6 weeks",
             "instructor": "Ms. Sarah Williams",
             "level": "Beginner",
-            "credits": 2,
+            "credit": 2,
             "description": "Explore the fundamentals of digital marketing and social media strategies."
         }
     ]

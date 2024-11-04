@@ -23,6 +23,7 @@ function TaskForm({ task, content }) {
     const goals = watch('setgoal');
     const submitData = (data) => {
         console.log(data);
+        //task data save 
     }
     return (
         <div className='flex flex-col items-center my-2 sm:mx-4'>

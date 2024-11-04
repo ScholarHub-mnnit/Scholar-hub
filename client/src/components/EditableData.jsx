@@ -4,15 +4,17 @@ import { HiSave } from "react-icons/hi";
 import { MdDeleteOutline } from "react-icons/md";
 import { v4 as uuidv4 } from 'uuid';
 
-function EditableData({ entity, keys }) {
+function EditableData({ entity, keys, delFunction, editFunction  }) {
     const [data, setData] = useState({ ...entity });
     const [isEditable, setIsEditable] = useState(false);
     const ref=useRef(keys.map((it)=>uuidv4()));
     const deleteData = (id) => {
-        console.log(id)
+        console.log(id);
+        delFunction(id);
     }
     const editData = () => {
         //edit data
+        editFunction(entity);
         setIsEditable(false);
     }
 

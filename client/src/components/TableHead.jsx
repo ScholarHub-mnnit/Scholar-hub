@@ -2,7 +2,7 @@ import React from 'react'
 import EditableData from './EditableData';
 import {v4 as uuidv4} from 'uuid'
 
-function TableHead({title, keys, list=[]}) {
+function TableHead({title, keys, list=[], delFunction, editFunction}) {
     return (
         <div className='my-4 '>
         <h2 className="sm:text-2xl text-xl font-bold text-center font-serif dark:text-gray-400">All {title}</h2>
@@ -15,13 +15,13 @@ function TableHead({title, keys, list=[]}) {
                 </tr>
             </thead>
         <tbody>{
-            list.map((item,idx)=><EditableData key={uuidv4()}  entity={item} keys={keys}/>)
+            list.map((item)=><EditableData key={uuidv4()}  entity={item} keys={keys} delFunction={delFunction} editFunction={editFunction}/>)
         }
         </tbody>
         </table>
         </div>:
         <div className="border w-fit m-auto  rounded-md  px-3 py-2 sm:text-2xl text-xl font-bold text-center font-serif dark:text-gray-400">
-            No Data!
+            No {title} found. Would you like to assign new {title}?
         </div>
     }
     </div>
