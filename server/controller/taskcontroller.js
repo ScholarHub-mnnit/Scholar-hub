@@ -126,6 +126,7 @@ export const updatetask = asynchandler(async (req, res, next) => {
       chapterno,
       chaptername,
       setgoal,
+      status,
       goaltype,
       deadline,
       duration,
@@ -137,7 +138,7 @@ export const updatetask = asynchandler(async (req, res, next) => {
     const id = req.user._id;
     const addrewarduser = await User.findById(id);
     let fixedpoint, varpoint;
-    if (tasktype === 'Assignment') {
+    if (updatedTask.tasktype === 'Assignment') {
       fixedpoint = 70.0;
       varpoint = 1.0;
     } else if (tasktype === 'Project') {
@@ -151,11 +152,14 @@ export const updatetask = asynchandler(async (req, res, next) => {
     const newdeadline = new Date(updatedTask.deadline - istOffset).getTime();
     const newDate = new Date(Date.now()).getTime();
     const variable = (newdeadline - newDate) / (1000 * 3600);
-    variable > fixedpoint / 2
-      ? (addrewarduser.rewardpoint =
-          addrewarduser.rewardpoint + fixedpoint + varpoint * variable)
-      : (addrewarduser.rewardpoint = fixedpoint / 2);
-
+    console.log(fixedpoint);
+    console.log(updatedTask.tasktype);
+    fixedpoint + varpoint * variable > fixedpoint / 2
+      ? (addrewarduser.rewardpoint = Math.ceil(
+          addrewarduser.rewardpoint + fixedpoint + varpoint * variable
+        ))
+      : (addrewarduser.rewardpoint = Math.ceil(fixedpoint / 2));
+    console.log(addrewarduser.rewardpoint);
     addrewarduser.save();
   }
 
