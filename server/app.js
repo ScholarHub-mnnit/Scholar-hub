@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import globalerrorhandler from './controller/errorcontroller.js';
 import authroute from './router/authrouter.js';
 import userroute from './router/userroute.js';
@@ -8,7 +9,7 @@ import taskroute from './router/taskrouter.js';
 import { protect } from './controller/authcontroller.js';
 import  cors from 'cors'
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

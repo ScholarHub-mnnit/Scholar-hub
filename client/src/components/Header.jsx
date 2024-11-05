@@ -25,7 +25,11 @@ function Header() {
   }
 
   const handleMenus = (e) => {
+<<<<<<< HEAD
     if (!profileRef?.current?.contains(e.target)) {
+=======
+    if (profileRef.current && !profileRef?.current.contains(e.target)) {
+>>>>>>> 95fa5c9e1ef27656f6bda02f0f84d647fb23ba6c
       setMenu(false);
       // console.log("close")
     }
