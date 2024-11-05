@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Auth from './components/Authenticate'
+import { Achievements, Assignments, Courses, Dashboard, ForPassword, Goals, Home,  Layout, Leaderboard, Lectures, Login, NotFound, Projects, Rewards, Schedule, Signup } from './pages'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='w-full min-h-screen  dark:bg-black'>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Layout/>}>
+            <Route path='' element={<Auth authentication={false}><Home/></Auth>}/>
+            <Route path='signup' element={<Auth authentication={false}><Signup/></Auth>}/>
+            <Route path='login' element={<Auth authentication={false}><Login/></Auth>}/>
+            <Route path='forgot-password' element={<Auth authentication={false}><ForPassword/></Auth>}/>
+            <Route path='dashboard' element={<Auth><Dashboard/></Auth>}/>
+            <Route path='leaderboard' element={<Auth><Leaderboard/></Auth>}/>
+            <Route path='schedule' element={<Auth><Schedule/></Auth>}/>
+            <Route path='goals' element={<Auth><Goals/></Auth>}/>
+            <Route path='courses' element={<Auth><Courses/></Auth>}/>
+            <Route path='assignments' element={<Auth><Assignments/></Auth>}/>
+            <Route path='lectures' element={<Auth><Lectures/></Auth>}/>
+            <Route path='projects' element={<Auth><Projects/></Auth>}/>
+            <Route path='achievements' element={<Auth><Achievements/></Auth>}/>
+            <Route path='rewards' element={<Auth><Rewards/></Auth>}/>
+          </Route>
+          <Route path='*' element={<NotFound/>}/>
+        </Routes>
+      </Router>
+  </div>
   )
 }
 
