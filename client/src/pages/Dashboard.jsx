@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdOutlineAssignmentTurnedIn, MdLeaderboard, MdStars } from "react-icons/md";
 import { SiBookstack } from "react-icons/si";
 import { AiFillSchedule } from "react-icons/ai";
@@ -9,12 +9,50 @@ import { Link } from 'react-router-dom';
 import Quote from '../components/Quote';
 import Table from '../components/Table';
 import { events } from '../Data/upcomingEvents';
-import { courses } from '../Data/courses';
 import { assignment } from '../Data/assignment';
+import { useDispatch, useSelector } from 'react-redux';
+import { courses as courseApi } from '../store/courseSlice';
+import { tasks } from '../store/taskSlice';
+import Loading from '../components/Loading'
+import Error from '../components/Error';
+import useCourses from '../Data/courses';
 
 
 
 function Dashboard() {
+  const dispatch= useDispatch();
+  const [error,setError]= useState("");
+  const [loading,setLoading]= useState(false);
+  const { course, loading:loading1, error:error1 } = useSelector((state) => state.course);
+  const { task, loading:loading2, error:error2 } = useSelector((state) => state.task);
+  const { keys, data }=useCourses();
+
+  const fetchFirst=async()=>{
+    dispatch(courseApi());//await
+    dispatch(tasks());//await
+  }
+
+  useEffect(() => {
+    setLoading(loading1 || loading2);
+  }, [loading1, loading2]);
+
+  
+  useEffect(() => {
+    setError(error1 || error2);
+  }, [error1, error2]);
+
+  useEffect(async()=>{
+    fetchFirst();
+  },[]);
+
+  if(loading){
+    return <Loading/>
+  }
+
+  if(error?.length>0){
+    return <Error message={error}/>
+  }
+
   return (
     <div className=' w-full py-2'>
       <div className='flex px-4'>
@@ -57,7 +95,7 @@ function Dashboard() {
                 {/* <h1 className='text-center'>Welcome</h1> */}
                 <div>
                   <Table title={"Upcoming Events"} graph={false} keys={events.keys} data={events.data}/>
-                  <Table title={"Current Courses"} keys={courses.keys} data={courses.data} label={"coursecode"} value={"credit"} />
+                  <Table title={"Current Courses"} keys={keys} data={data} label={"coursecode"} value={"credit"} />
                   <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data} label={"id"} value={"points"}/>
                 </div>
           </div>

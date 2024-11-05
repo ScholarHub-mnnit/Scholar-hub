@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import TableHead from '../components/TableHead';
-import { courses } from '../Data/courses';
+import useCourses from '../Data/courses';
+import courseService from '../api/courseApiService';
 
 function Courses() {
   const { register, handleSubmit, formState: { errors }, watch, } = useForm({
@@ -18,17 +19,44 @@ function Courses() {
     }
   })
 
-  const dataSubmit =async (data) => {
-    console.log(data);
+  const [error,setError]=useState("");
+  const { keys, data }=useCourses();
+
+  const dataSubmit =async (entity) => {
+    console.log(entity);
     //submit courses data
+    setError("");
+    try {
+      const res=await courseService.addCourse(entity);
+      if(!res) setError("Try Again!");
+    } catch (error) {
+      console.log("Courses/add/error:",error);
+      setError(error.message);
+    }
   }
 
-  const editCourse=async()=>{
+  const editCourse=async(entity)=>{
     //edit code
+    setError("");
+    try {
+      await courseService.updateCourse(entity);
+    } catch (error) {
+      console.log("Courses/update/error:",error);
+      throw error;
+      //error message  logic
+    }
   }
 
-  const deleteCourse=async()=>{
+  const deleteCourse=async(entity)=>{
     //delete code
+    setError("");
+    try {
+      await courseService.deleteCourse(entity);
+    } catch (error) {
+      console.log("Courses/delete/error:",error);
+      throw error;
+      //error message  logic
+    }
   }
 
   return (
@@ -67,12 +95,13 @@ function Courses() {
             py-1 px-4 border dark:border-neutral-800 dark:hover:border-black border-blue-700 rounded text-md" type='submit'>
                 Add
               </button>
+              {error.length > 0 && <p className=' mb-2 text-center text-md text-red-600'>{error}</p>}
             </div>
           </div>
         </form>
       </div>
       <div className="table w-full">
-        <TableHead title={"Courses"} keys={courses.keys} list={courses.data} delFunction={deleteCourse} editFunction={editCourse}/>
+        <TableHead title={"Courses"} keys={keys} list={data} delFunction={deleteCourse} editFunction={editCourse}/>
       </div>
     </div>
   )

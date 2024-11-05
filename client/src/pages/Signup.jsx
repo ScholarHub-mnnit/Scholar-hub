@@ -16,7 +16,7 @@ function Signup() {
       const res= await authService.signup(data);
       if(res) setSuccess(true);
     } catch (error) {
-      setError(error.message);
+      setError(error.reponse.data.message);
     }
     setLoading(false);
   }
