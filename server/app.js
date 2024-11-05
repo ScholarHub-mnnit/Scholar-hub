@@ -7,14 +7,27 @@ import userroute from './router/userroute.js';
 import courseroute from './router/courserouter.js';
 import taskroute from './router/taskrouter.js';
 import { protect } from './controller/authcontroller.js';
-// import  cors from 'cors'
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 const app = express();
-app.use(cors());
+
+app.use(bodyParser.json());  
+app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(cookieParser()); 
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, 
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
-// app.use(cors())
+
 app.use('/api/auth', authroute);
 app.use(protect);
 app.use('/api/user', userroute);

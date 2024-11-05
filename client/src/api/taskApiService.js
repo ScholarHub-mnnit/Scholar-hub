@@ -4,14 +4,15 @@ import { baseUrl } from './baseUrl'
 class TaskService {
     constructor(baseUrl) {
         this.api = axios.create({
-            baseURL: baseUrl + "task/",
+            baseURL: `${baseUrl}task/`,
             timeout: 10000,
             withCredentials: true,
         });
     }
     async fetchTasks() {
         try {
-            const response = await axios.get('all');
+            const response = await this.api.get('all');
+            console.log(response)
             return response?.data?.tasks;
         }
         catch (error) {
@@ -21,7 +22,7 @@ class TaskService {
     }
     async addTask(data) {
         try {
-            const response = await axios.post('add', data);
+            const response = await this.api.post('add', data);
             return response?.status===201;
         }
         catch (error) {
@@ -31,7 +32,7 @@ class TaskService {
     }
     async updateTask(data) {
         try {
-            const response = await axios.patch(`update/${data?._id || data?.id}`, data);
+            const response = await this.api.patch(`update/${data?._id || data?.id}`, data);
             return response?.data;//updated task
         }
         catch(error){
@@ -41,7 +42,7 @@ class TaskService {
     }
     async deleteTask(data) {
         try {
-            const response = await axios.delete(`delete/${data?._id || data?.id}`);
+            const response = await this.api.delete(`delete/${data?._id || data?.id}`);
             return response?.status===201;
         }
         catch(error){

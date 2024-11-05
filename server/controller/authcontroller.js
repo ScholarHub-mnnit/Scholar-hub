@@ -21,7 +21,7 @@ export const signup = asynchandler(async (req, res, next) => {
   const user =
     (await User.findOne({ username })) || (await User.findOne({ email }));
   if (user) {
-    return next(new ApiError('User are already exist', 404));
+    return next(new ApiError('User already exist', 404));
   }
   if (!email || !password || !username || !college || !branch || !year) {
     return next(new ApiError('Please Enter all the detail', 404));
@@ -82,9 +82,23 @@ export const login = asynchandler(async (req, res, next) => {
     return next(new ApiError('Token cannot generated', 402));
   }
 
-  delete requser.password;
+  console.log(req);
+  const options={
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None'
+  }
 
-  res.status(201).json({
+  res.status(201)
+  .cookie(
+    'accessToken',acesstoken,
+    options
+  )
+  .cookie(
+    'refreshToken',refreshtoken,
+    options
+  )
+  .json({
     message: 'User login succesfully',
     data: {
       user: requser,
@@ -96,7 +110,7 @@ export const login = asynchandler(async (req, res, next) => {
 
 export const protect = asynchandler(async (req, res, next) => {
   console.log('Protect middleware iss invoked');
-
+ 
   const test_token = req.headers.authorization;
 
   // console.log(req.headers.authorization);
@@ -110,11 +124,11 @@ export const protect = asynchandler(async (req, res, next) => {
     refreshtoken = req.cookies.refreshtoken;
   }
 
-  // console.log(refreshtoken);
+  console.log(refreshtoken);
 
-  // console.log('Hello');
+  console.log('Hello');
 
-  // console.log(acesstoken);
+  console.log(acesstoken);
 
   if (!acesstoken || !refreshtoken) {
     return next(new ApiError('You have to login again or sign up', 400));

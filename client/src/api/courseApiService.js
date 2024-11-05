@@ -11,7 +11,8 @@ class CourseService {
     }
     async fetchCourses() {
         try {
-            const response = await axios.get('all');
+            const response = await this.api.get('all');
+            console.log(response)
             return response.data;//course'll receive
         }
         catch (error) {
@@ -21,7 +22,7 @@ class CourseService {
     }
     async fetchOne(data) {
         try {
-            const response = await axios.get(`/get/${data?._id || data?.id}`);
+            const response = await this.api.get(`/get/${data?._id || data?.id}`);
             return response.data;
         }
         catch (error) {
@@ -31,7 +32,7 @@ class CourseService {
     }
     async addCourse(data) {
         try {
-            const response = await axios.post('add', data);
+            const response = await this.api.post('add', data);
             return response.data;//userData'll receive
         }
         catch (error) {
@@ -41,7 +42,7 @@ class CourseService {
     }
     async updateCourse(data) {
         try {
-            const response = await axios.patch(`update/${data?._id || data?.id}`, data);
+            const response = await this.api.patch(`update/${data?._id || data?.id}`, data);
             return response.data;//updated course data
         }
         catch (error) {
@@ -51,7 +52,7 @@ class CourseService {
     }
     async deleteCourse(data) {
         try {
-            const response = await axios.delete(`/delete/${data?._id || data?.id}`);
+            const response = await this.api.delete(`/delete/${data?._id || data?.id}`);
             return response?.data;//deleted data'll receive
         }
         catch (error) {
@@ -61,7 +62,7 @@ class CourseService {
     }
     async deleteAll() {
         try {
-            const response = await axios.delete('deleteall');
+            const response = await this.api.delete('deleteall');
             return response?.data;// user data..
         }
         catch (error) {

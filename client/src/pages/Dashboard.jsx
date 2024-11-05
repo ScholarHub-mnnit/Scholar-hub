@@ -26,8 +26,9 @@ function Dashboard() {
   const { course, loading:loading1, error:error1 } = useSelector((state) => state.course);
   const { task, loading:loading2, error:error2 } = useSelector((state) => state.task);
   const { keys, data }=useCourses();
+  console.log("data:",data);
 
-  const fetchFirst=async()=>{
+  const fetchFirst=()=>{
     dispatch(courseApi());//await
     dispatch(tasks());//await
   }
@@ -41,7 +42,7 @@ function Dashboard() {
     setError(error1 || error2);
   }, [error1, error2]);
 
-  useEffect(async()=>{
+  useEffect(()=>{
     fetchFirst();
   },[]);
 

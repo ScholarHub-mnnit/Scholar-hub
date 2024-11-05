@@ -13,7 +13,7 @@ class ApiService{
         try {
             const response=await this.api.post("login",data);
             console.log("authApi/login: ",response);
-            return response?.data;
+            return response?.data?.data;
         } catch (error) {
             console.log("authApi/login: ",error);
             throw error;
