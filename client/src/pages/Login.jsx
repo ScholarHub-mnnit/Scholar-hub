@@ -73,7 +73,7 @@ function Login() {
             </div>
           </form>
         </div>
-      </div>u
+      </div>
     </>
   )
 }

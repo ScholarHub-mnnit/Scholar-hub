@@ -7,14 +7,14 @@ import userroute from './router/userroute.js';
 import courseroute from './router/courserouter.js';
 import taskroute from './router/taskrouter.js';
 import { protect } from './controller/authcontroller.js';
-import  cors from 'cors'
+// import  cors from 'cors'
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
-app.use(cors())
+// app.use(cors())
 app.use('/api/auth', authroute);
 app.use(protect);
 app.use('/api/user', userroute);

@@ -20,7 +20,6 @@ class TaskService {
         }
     }
     async addTask(data) {
-        console.log("Create the task")
         try {
             const response = await axios.post('add', data);
             return response?.status===201;

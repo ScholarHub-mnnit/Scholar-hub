@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 
 function Signup() {
   const [loading,setLoading] = useState(false);
-  const [error,setError] = useState("");
+  const [error,setError] = useState(false);
   const [success,setSuccess] = useState(false);
   const signup=async(data)=>{
     console.log("signup",data);
@@ -16,9 +16,7 @@ function Signup() {
       const res= await authService.signup(data);
       if(res) setSuccess(true);
     } catch (error) {
-      // console.log(error.data)
-      // console.log(error)
-      setError(error.response?.data?.message);
+      setError(error.message);
     }
     setLoading(false);
   }
