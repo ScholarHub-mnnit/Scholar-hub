@@ -75,7 +75,7 @@ export const login = asynchandler(async (req, res, next) => {
     // console.log(requser);
     return next(new ApiError('Password is incorrect', 400));
   }
-
+  requser.password = undefined;
   const { acesstoken, refreshtoken } = createrefreshandacesstoken(requser.id);
 
   if (!acesstoken || !refreshtoken) {
@@ -83,45 +83,37 @@ export const login = asynchandler(async (req, res, next) => {
   }
 
   console.log(req);
-  const options={
+  const options = {
     httpOnly: true,
-    secure: true,
-    sameSite: 'None'
-  }
+    sameSite: 'None',
+  };
 
-  res.status(201)
-  .cookie(
-    'accessToken',acesstoken,
-    options
-  )
-  .cookie(
-    'refreshToken',refreshtoken,
-    options
-  )
-  .json({
-    message: 'User login succesfully',
-    data: {
-      user: requser,
-      acesstoken,
-      refreshtoken,
-    },
-  });
+  res
+    .status(201)
+    .cookie('acesstoken', acesstoken, options)
+    .cookie('refreshtoken', refreshtoken, options)
+    .json({
+      message: 'User login succesfully',
+      data: {
+        user: requser,
+        acesstoken,
+        refreshtoken,
+      },
+    });
 });
 
 export const protect = asynchandler(async (req, res, next) => {
   console.log('Protect middleware iss invoked');
- 
-  const test_token = req.headers.authorization;
 
-  // console.log(req.headers.authorization);
+  const test_token = req.headers.authorization;
 
   let acesstoken, refreshtoken;
   if (test_token && test_token.startsWith('Bearer')) {
     acesstoken = test_token.split(' ')[1];
     refreshtoken = test_token.split(' ')[2];
   } else {
-    acesstoken = req.cookies.acesstoken;
-    refreshtoken = req.cookies.refreshtoken;
+    acesstoken = req.cookies?.acesstoken;
+    refreshtoken = req.cookies?.refreshtoken;
   }
 
   console.log(refreshtoken);
