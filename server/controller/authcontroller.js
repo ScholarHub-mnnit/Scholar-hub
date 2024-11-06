@@ -83,34 +83,31 @@ export const login = asynchandler(async (req, res, next) => {
   }
 
   console.log(req);
-  const options={
-    httpOnly: true,
-    secure: true,
-    sameSite: 'None'
+  const options = {
+    httpOnly: true, 
+    secure: false,
   }
 
   res.status(201)
-  .cookie(
-    'accessToken',acesstoken,
-    options
-  )
-  .cookie(
-    'refreshToken',refreshtoken,
-    options
-  )
-  .json({
-    message: 'User login succesfully',
-    data: {
-      user: requser,
-      acesstoken,
-      refreshtoken,
-    },
-  });
+    .cookie(
+      'acesstoken', acesstoken, options
+    )
+    .cookie(
+      'refreshtoken', refreshtoken, options
+    )
+    .json({
+      message: 'User login succesfully',
+      data: {
+        user: requser,
+        acesstoken,
+        refreshtoken,
+      },
+    });
 });
 
 export const protect = asynchandler(async (req, res, next) => {
   console.log('Protect middleware iss invoked');
- 
+
   const test_token = req.headers.authorization;
 
   // console.log(req.headers.authorization);
