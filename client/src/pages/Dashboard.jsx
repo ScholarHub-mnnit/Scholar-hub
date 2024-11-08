@@ -41,7 +41,7 @@ function Dashboard() {
     setError(error1 || error2);
   }, [error1, error2]);
 
-  useEffect(async()=>{
+  useEffect(()=>{
     fetchFirst();
   },[]);
 

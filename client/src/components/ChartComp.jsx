@@ -9,11 +9,11 @@ const PieChart = ({info=[],label,value}) => {
     
     // '#d45087','#00BFFF',
     const data = {
-        labels: info?.map(item=>item[label]),
+        labels: Array.isArray(info) && info?.map(item=>item[label]),
         datasets: [
             {   
                 label:value,
-                data: info?.map(item=>item[value]),
+                data: Array.isArray(info) && info?.map(item=>item[value]),
                 backgroundColor: [
                     '#FF6F61',
                     '#6BB9FF',
