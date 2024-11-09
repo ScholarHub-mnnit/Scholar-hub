@@ -66,14 +66,14 @@ function Header() {
             <div ref={profileRef}  className='relative'>
               <div className='profile cursor-pointer rounded-full text-white bg-blue-700 dark:bg-slate-700 w-10 h-10
                text-center pt-1 text-xl font-bold border dark:border-neutral-50 border-white'
-               onClick={()=>setMenu((prev)=>!prev)}>S</div>
+               onClick={()=>setMenu((prev)=>!prev)}>{user?.name[0]}</div>
               {menu && <div className="menu hover:shadow-xl border dark:border-neutral-700 rounded-xl py-4 px-4 dark:bg-neutral-800 bg-blue-400 absolute top-12 right-0">
                 <div className="user flex items-center justify-around text-white">
                   <Link to="/dashboard"><div className='cursor-pointer flex justify-center text-white bg-blue-700 dark:bg-slate-700 w-14 aspect-square rounded-full items-center
-               text-xl font-bold border dark:border-neutral-50 border-white'>S</div>
+               text-xl font-bold border dark:border-neutral-50 border-white'>{user?.name[0]}</div>
                </Link>
                   <Link to="/dashboard">
-                  <div className='font-semibold cursor-pointer text-nowrap text-lg px-4'>User Name</div>
+                  <div className='font-semibold cursor-pointer text-nowrap text-lg px-4'>{user?.name}</div>
                   </Link>
                 </div>
                 <div className="buttons text-white dark:text-gray-300 pt-4">

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import taskService from "../api/taskApiService";
+import formatDate from '../utility/formatDate'
 
 const initialState = {
     task: [],
@@ -24,7 +25,11 @@ export const taskSlice = createSlice({
             })
             .addCase(tasks.fulfilled, (state, action) => {
                 state.loading = false;
-                state.task = action.payload;
+                const data = action.payload;
+                state.task = data.map((item) => ({
+                    ...item, // Spread the rest of the properties of the item
+                    deadline: formatDate(item.deadline) // Format the deadline
+                }));
             })
             .addCase(tasks.rejected, (state, action) => {
                 state.loading = false;

@@ -21,6 +21,7 @@ import useCourses from '../Data/courses';
 
 function Dashboard() {
   const dispatch= useDispatch();
+  const {user} =useSelector((state)=>state.user);
   const [error,setError]= useState("");
   const [loading,setLoading]= useState(false);
   const { course, loading:loading1, error:error1 } = useSelector((state) => state.course);
@@ -63,10 +64,10 @@ function Dashboard() {
             <div className="buttons py-2 px-2 text-white dark:text-gray-400 pt-4">
               <div className='flex items-center'>
                 <Link to="/dashboard"><div className='cursor-pointer flex mb-2 sm:mb-0 justify-center text-white bg-blue-700 dark:bg-slate-700 sm:w-10 w-8 aspect-square rounded-full items-center
-               sm:text-xl font-bold border dark:border-neutral-50 border-white'>S</div>
+               sm:text-xl font-bold border dark:border-neutral-50 border-white'>{user?.name[0]}</div>
                 </Link>
                 <Link to="/dashboard">
-                  <div className='hidden sm:block font-semibold cursor-pointer text-nowrap text-lg px-4'>User Name</div>
+                  <div className='hidden sm:block font-semibold cursor-pointer text-nowrap text-lg px-4'>{user?.name}</div>
                 </Link>
               </div>
               <ul className='flex flex-col  gap-2 justify-start'>
@@ -97,7 +98,7 @@ function Dashboard() {
                 {/* <h1 className='text-center'>Welcome</h1> */}
                 <div>
                   <Table title={"Upcoming Events"} graph={false} keys={events.keys} data={events.data}/>
-                  <Table title={"Current Courses"} keys={keys} data={data} label={"coursecode"} value={"credit"} />
+                  <Table title={"Current Courses"} add='/courses' keys={keys} data={data} label={"coursecode"} value={"credit"} />
                   <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data} label={"chaptername"} value={"chapterno"}/>
                 </div>
           </div>

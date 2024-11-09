@@ -2,18 +2,22 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import taskService from '../api/taskApiService';
+import { useDispatch } from 'react-redux';
+import { tasks } from '../store/taskSlice'
 
 function TaskForm({ task, content }) {
-    const today=new Date();
-    const [error,setError]= useState("");
-    const [success,setSuccess]= useState("");
+    const dispatch=useDispatch();
+    const today = new Date();
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const { register, getValues, setValue, watch, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             title: "",
-            tasktype: content || "Assignment",
+            tasktype: content,//page task type
             deadline: today.toLocaleDateString(),
             chapterno: 0,
             chaptername: "",
+            coursecode:"",
             duration: null,
             status: "Pending",
             remark: "",
@@ -21,24 +25,25 @@ function TaskForm({ task, content }) {
             goaltype: "",
         }
     });
-    const dateValue=watch('deadline');
+    const dateValue = watch('deadline');
     const type = watch('tasktype');
     const goals = watch('setgoal');
-    const submitData = async(data) => {
+    const submitData = async (data) => {
         console.log(data);
         //task data save 
         setError("");
         setSuccess("");
         try {
-            let succ=await taskService.addTask(data);
-            if(!succ){
+            let succ = await taskService.addTask(data);
+            if (!succ) {
                 setError("Try Again!");
             }
-            else{
+            else {
                 setSuccess(succ.message);
+                dispatch(tasks());
             }
         } catch (error) {
-            console.log("TaskForm/error:",error);
+            console.log("TaskForm/error:", error);
             setError(error?.response?.data?.message);
         }
     }
@@ -52,34 +57,38 @@ function TaskForm({ task, content }) {
                             label={"Title"}
                             id="title"
                             {...register('title', { required: 'Title is required!' })}
-                            placeholder={getValues('tasktype')+" title here..."}
+                            placeholder={getValues('tasktype') + " title here..."}
                         />
                         {errors.title && <p className="text-red-500 text-center">{errors.title.message}</p>}
                     </div>
                     <div className="type grid grid-cols-1 sm:grid-cols-2 sm:gap-20  w-full">
                         <div>
-                            <div className='flex  justify-between items-center '>
-                                <label htmlFor="tasktype" className="block mx-2 text-gray-900 dark:text-gray-400 text-md font-bold text-nowrap">Type: </label>
-                                <select
-                                    className='focus:outline-none py-2 px-3 shadow text-black dark:text-gray-200 dark:bg-gray-950  dark:border-neutral-800 border border-gray-300 rounded '
-                                    onChange={(e) => setType(e.target.value)}
-                                    id="tasktype"
-                                    {...register('tasktype', { required: "Type is required!" })}
-                                >
-                                    <option value="Assignment">Assignment</option>
-                                    <option value="Lectures">Lecture</option>
-                                    <option value="Project">Project</option>
-                                </select>
-                            </div>
-                            {errors.tasktype && <p className="text-red-500 text-center">{errors.tasktype.message}</p>}
+                        <Input
+                            label={"Course Code"}
+                            id="coursecode"
+                            {...register('coursecode')}
+                            placeholder={"Code here..."}
+                        />
+                            {errors.coursecode && <p className="text-red-500 text-center">{errors.coursecode.message}</p>}
                         </div>
 
                         {type === 'Lectures' ? <div className='m-2'>
                             <Input
                                 label={"Duration"}
-                                type="time"
+                                placeholder={"in hours..."}
                                 id="duration"
-                                {...register('duration')}
+                                {...register('duration',
+                                    {
+                                        required: {
+                                            value: type==='Lectures',
+                                            message: 'Duration field is required!'
+                                        },
+                                        pattern: {
+                                            value: /^[1-9]\d*$/,
+                                            message: 'Please enter a valid integer'
+                                        }
+                                    }
+                                )}
                             />
                         </div>
                             :
@@ -167,8 +176,8 @@ function TaskForm({ task, content }) {
                     </div>
                     <button type="submit" className="dark:hover:bg-gray-900 dark:bg-gray-950 bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold 
             py-2 px-4 border dark:border-neutral-800 dark:hover:border-black border-blue-700 rounded text-md">Add {task}</button>
-            {error.length>0 && <p className="text-red-500 text-center">{error}</p>}
-            {success && success.length>0 && <p className="text-green-500 text-center">{success}</p>}
+                    {error && error.length > 0 && <p className="text-red-500 text-center">{error}</p>}
+                    {success && success.length > 0 && <p className="text-green-500 text-center">{success}</p>}
                 </div>
             </form>
         </div>

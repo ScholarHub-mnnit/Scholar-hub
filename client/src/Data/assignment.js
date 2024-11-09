@@ -1,22 +1,21 @@
 import { useSelector } from "react-redux";
 
 const useAssignments = () => {
-    let assignment = useSelector((state) => state.task.task);
-    assignment=assignment.filter((item)=>item.tasktype==='Assignment');
-    const keys=[
-                "chaptername",
-                "title",
-                "deadline",
-                "chapterno"
-            ]; // Static keys for the table
-  
-    return { keys, data: assignment };
-  };
-  
-  export default useAssignments;
+  let assignment = useSelector((state) => state.task.task);
+  assignment = assignment.filter((item) => item?.tasktype === 'Assignment');
+  const keys = [
+    "title",
+    "status",
+    "deadline",
+  ]; // Static keys for the table
+
+  return { keys, data: assignment };
+};
+
+export default useAssignments;
 
 
-  
+
 
 // export const assignment={
 //     keys:[

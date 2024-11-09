@@ -115,6 +115,7 @@ export const updatecourse = asynchandler(async (req, res, next) => {
 });
 
 export const delcourse = asynchandler(async (req, res, next) => {
+  console.log(req)
   const course_id = req.params.id;
 
   const findcourse = await Course.findOne({ _id: course_id });
@@ -130,9 +131,6 @@ export const delcourse = asynchandler(async (req, res, next) => {
 
   res.status(201).json({
     message: 'Delete Succesfully',
-    data: {
-      coursedeletd,
-    },
   });
 });
 

@@ -12,7 +12,7 @@ class CourseService {
     async fetchCourses() {
         try {
             const response = await this.api.get('all');
-            console.log(response)
+            // console.log(response)
             return response.data?.data?.courses;//course'll receive
         }
         catch (error) {
@@ -33,7 +33,8 @@ class CourseService {
     async addCourse(data) {
         try {
             const response = await this.api.post('add', data);
-            return response.data;//userData'll receive
+            // console.log(response);
+            return response?.data;//userData'll receive
         }
         catch (error) {
             console.error('courseApi/addCourse:', error);
@@ -52,8 +53,9 @@ class CourseService {
     }
     async deleteCourse(data) {
         try {
-            const response = await this.api.delete(`/delete/${data?._id || data?.id}`);
-            return response?.data;//deleted data'll receive
+            const response = await this.api.delete(`/delete/${data?._id}`);
+            console.log(response)
+            return response?.data?.message;//deleted data'll receive
         }
         catch (error) {
             console.error('courseApi/deleteCourse:', error);

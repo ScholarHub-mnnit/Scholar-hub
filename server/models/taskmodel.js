@@ -48,12 +48,7 @@ const taskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-
-  createdat: {
-    type: String,
-    default: Date.now(),
-  },
-});
+},{ timestamps: true });
 
 const Task = mongoose.model('Task', taskSchema);
 

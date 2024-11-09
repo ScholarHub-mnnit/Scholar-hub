@@ -43,8 +43,8 @@ class TaskService {
     }
     async deleteTask(data) {
         try {
-            const response = await this.api.delete(`delete/${data?._id || data?.id}`);
-            return response?.status===201;
+            const response = await this.api.delete(`delete/${data?._id}`);
+            return response?.data?.message;
         }
         catch(error){
             console.log('taskApi/deleteTask:',error);

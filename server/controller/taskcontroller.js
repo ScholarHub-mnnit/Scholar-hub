@@ -5,26 +5,28 @@ import ApiError from '../utils/apierror.js';
 import asynchandler from '../utils/asynchandler.js';
 
 export const getall = asynchandler(async (req, res, next) => {
-  const id = req.user.id;
+  const id = req.user._id;
+  console.log(id)
   let tasks = null;
-  const course_id = req.params.id;
-
-  if (course_id) {
-    const course = await Course.findOne({ _id: course_id }).populate('task');
+  const coursecode = req.params.id;
+ console.log(coursecode)
+  if (coursecode) {
+    const course = await Course.findOne({ coursecode ,user:id}).populate('task');
 
     if (!course) {
-      return next(new ApiError('Course is not found', 300));
+      return next(new ApiError('Course is not found', 400));
     }
 
     tasks = course.task;
   } else {
     const user = await User.findOne({ _id: id }).populate('task');
-
+    console.log(user)
     if (!user) {
-      return next(new ApiError('You cannot add assignment', 306));
+      return next(new ApiError('You cannot add assignment', 406));
     }
-
+    console.log()
     tasks = user.task;
+    console.log(user.task)
   }
 
   //send the whole data which can be filter on the basis of chapter name and number
@@ -38,9 +40,8 @@ export const getall = asynchandler(async (req, res, next) => {
 });
 
 export const addtask = asynchandler(async (req, res, next) => {
-  console.log(req)
-  const course_id = req.params.id;
-  const user_id = req.user.id;
+
+  const user_id = req.user._id;
   console.log(req.body);
   const {
     title,
@@ -52,10 +53,21 @@ export const addtask = asynchandler(async (req, res, next) => {
     goaltype,
     deadline,
     duration,
+    coursecode
   } = req.body;
 
   if (!title || !tasktype || !(deadline || duration)) {
-    return next(new ApiError('Enter the required field', 302));
+    return next(new ApiError('Enter the required field', 402));
+  }
+
+  let reqcourse;
+
+  if (coursecode) {
+    reqcourse = await Course.findOne({coursecode});
+
+    if (!reqcourse) {
+      return next(new ApiError('Cannot find coursed to add ', 404));
+    }
   }
 
   const newtask = await Task.create({
@@ -70,25 +82,18 @@ export const addtask = asynchandler(async (req, res, next) => {
     duration,
   });
 
-  if (course_id) {
-    const reqcourse = await Course.findById(course_id);
-
-    if (!reqcourse) {
-      return next(new ApiError('Cannot find coursed to add ', 304));
-    }
-
+  if (coursecode) {
     reqcourse.task.push(newtask);
-
+    console.log(reqcourse);
     reqcourse.save();
-  } else {
+  } 
     const requser = await User.findOne({ _id: user_id });
     if (!requser) {
-      return next(new ApiError('User cannot found', 304));
+      return next(new ApiError('User cannot found', 404));
     }
     console.log(requser);
     requser.task.push(newtask);
     requser.save();
-  }
 
   res.status(201).json({
     message: `${tasktype} add sucessfully`,
@@ -185,12 +190,12 @@ export const updatetask = asynchandler(async (req, res, next) => {
   });
 });
 export const deltask = asynchandler(async (req, res, next) => {
-  const id = req.params;
-
+  const id = req.params.id;
+ console.log(id);
   const reqtask = await Task.findById(id);
-
+ console.log(reqtask)
   if (!reqtask) {
-    next(new ApiError('Task Cannot FOund', 300));
+    next(new ApiError('Task Cannot FOund', 400));
   }
 
   const deletedTask = await Task.findByIdAndDelete(id);

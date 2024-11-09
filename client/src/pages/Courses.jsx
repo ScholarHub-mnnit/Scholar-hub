@@ -4,10 +4,12 @@ import Input from '../components/Input';
 import useCourses from '../Data/courses';
 import courseService from '../api/courseApiService';
 import TableHead from '../components/TableHead';
+import { useDispatch } from 'react-redux';
+import {courses} from '../store/courseSlice'
 
 function Courses() {
   const [addForm,setAddForm]=useState(false);
-
+  const dispatch= useDispatch();
   const { register, handleSubmit, formState: { errors }, watch, } = useForm({
     defaultValues: {
       name: "",
@@ -22,15 +24,20 @@ function Courses() {
   })
 
   const [error,setError]=useState("");
+  const [success,setSuccess]= useState("");
   const { keys, data }=useCourses();
 
   const dataSubmit =async (entity) => {
-    console.log(entity);
-    //submit courses data
-    setError("");
     try {
+      //submit courses data
+      setError("");
+      setSuccess("");
       const res=await courseService.addCourse(entity);
       if(!res) setError("Try Again!");
+      else {
+        dispatch(courses());
+        setSuccess(res?.message);
+      }
     } catch (error) {
       console.log("Courses/add/error:",error);
       setError(error.message);
@@ -41,7 +48,8 @@ function Courses() {
     //edit code
     setError("");
     try {
-      await courseService.updateCourse(entity);
+      const res=await courseService.updateCourse(entity);
+      if(res)  dispatch(courses());
     } catch (error) {
       console.log("Courses/update/error:",error);
       throw error;
@@ -53,7 +61,8 @@ function Courses() {
     //delete code
     setError("");
     try {
-      await courseService.deleteCourse(entity);
+      const res=await courseService.deleteCourse(entity);
+      if(res.length>0)   dispatch(courses());
     } catch (error) {
       console.log("Courses/delete/error:",error);
       throw error;
@@ -92,12 +101,13 @@ function Courses() {
                 {errors && errors?.credit && errors.credit?.message.length > 0 && <p className=' mb-2 text-center text-md text-red-600'>{errors.credit.message}</p>}
               </div>
             </div>
-            <div>
+            <div className='flex flex-col items-center'>
               <button className="mt-4 dark:hover:bg-gray-900 dark:bg-gray-950 bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold 
             py-1 px-4 border dark:border-neutral-800 dark:hover:border-black border-blue-700 rounded text-md" type='submit'>
                 Add
               </button>
               {error.length > 0 && <p className=' mb-2 text-center text-md text-red-600'>{error}</p>}
+              {success && success.length>0 && <p className="text-green-500 text-center">{success}</p>}
             </div>
           </div>
         </form>

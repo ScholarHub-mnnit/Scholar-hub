@@ -6,14 +6,14 @@ function Table({ title ,graph=true, keys=[] ,add="", data=[],label,value}) {
     return (
         <div className=" my-3 py-2 sm:px-3 border dark:border-slate-800 rounded">
             <div className={`flex ${add.length>0?"justify-between":"justify-center"} items-center mb-4`}><h1 className="ml-2 text-blue-400 dark:text-gray-400 text-2xl font-bold ">{title}</h1>
-            {add.length>0 && <Link to={add}><button className='border px-2 py-1 rounded dark:bg-slate-800 dark:hover:bg-slate-900 dark:hover:text-gray-100 text-blue-400 dark:hover:border-gray-400  hover:border-blue-600 hover:text-black dark:text-gray-400 text-lg font-semibold'>Add</button></Link>}
+            {add.length>0 && <Link to={add}><button className='border px-4 py-1 rounded dark:bg-slate-800 dark:hover:bg-slate-900 dark:hover:text-gray-100 text-blue-400 dark:hover:border-gray-400  hover:border-blue-600 hover:text-black dark:text-gray-400 text-lg font-semibold'>All</button></Link>}
             </div>
             <div className="flex gap-4 items-center justify-evenly flex-col md:flex-row">
                 {keys.length>0 ? <div className='md:w-1/2'>
                     <table className="md:min-w-full bg-white border dark:border-slate-600 px-4 py-4">
                         <thead>
                             <tr className=" dark:bg-gray-900 bg-blue-400 text-white dark:text-gray-400 uppercase text-sm leading-normal">
-                                {keys.map((item,idx)=><th key={idx} className="py-3 px-2 text-center ">{item}</th>)}
+                                {Array.isArray(keys) && keys.map((item,idx)=><th key={idx} className="py-3 px-2 text-center ">{item}</th>)}
                             </tr>
                         </thead>
                         <tbody className="text-gray-600 text-sm font-light">
