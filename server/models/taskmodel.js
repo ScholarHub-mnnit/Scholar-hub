@@ -38,8 +38,8 @@ const taskSchema = new mongoose.Schema({
   },
   goaltype: {
     type: String,
-    enum: ['Daily', 'Weekly'],
-    default: 'Daily',
+    enum: ['','Daily', 'Weekly'],
+    default: '',
   },
   deadline: {
     type: Date,

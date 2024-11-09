@@ -4,6 +4,18 @@ import TableHead from '../components/TableHead'
 import taskService from '../api/taskApiService'
 
 function Projects() {
+  
+    let data = useSelector((state) => state.task.task);
+    data=data.filter((item)=>item.tasktype==='Project');
+    const keys=[
+                "chaptername",
+                "title",
+                "deadline",
+                "chapterno"
+            ]; // Static keys for the table
+  
+  const [addForm,setAddForm]=useState(false);
+
   const updateData=async(entity)=>{
     //update code
     try {
@@ -27,9 +39,9 @@ function Projects() {
 
   return (
     <div className=''>
-      <TaskForm task={"Project"} content={"Project"}/>
+      {addForm && <TaskForm task={"Project"} content={"Project"}/>}
       <div className="data">
-        <TableHead title={"Projects"} editFunction={updateData}/>
+        {addForm && <TableHead title={"Projects"} editFunction={updateData} buttonstate={addForm} buttonFunc={()=>setAddForm((prev)=>!prev)} list={data} keys={keys}/>}
       </div>
     </div>
   )

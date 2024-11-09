@@ -38,8 +38,10 @@ export const getall = asynchandler(async (req, res, next) => {
 });
 
 export const addtask = asynchandler(async (req, res, next) => {
+  console.log(req)
   const course_id = req.params.id;
   const user_id = req.user.id;
+  console.log(req.body);
   const {
     title,
     description,
@@ -89,7 +91,7 @@ export const addtask = asynchandler(async (req, res, next) => {
   }
 
   res.status(201).json({
-    message: 'task add sucessfully',
+    message: `${tasktype} add sucessfully`,
   });
 });
 

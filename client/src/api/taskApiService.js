@@ -13,7 +13,7 @@ class TaskService {
         try {
             const response = await this.api.get('all');
             console.log(response)
-            return response?.data?.tasks;
+            return response?.data?.data?.tasks;
         }
         catch (error) {
             console.log('taskApi/fetchTasks:', error);
@@ -23,7 +23,8 @@ class TaskService {
     async addTask(data) {
         try {
             const response = await this.api.post('add', data);
-            return response?.status===201;
+            // console.log(response)
+            return response?.data;
         }
         catch (error) {
             console.log('taskApi/addTask:', error);

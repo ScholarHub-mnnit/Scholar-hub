@@ -13,7 +13,7 @@ class CourseService {
         try {
             const response = await this.api.get('all');
             console.log(response)
-            return response.data;//course'll receive
+            return response.data?.data?.courses;//course'll receive
         }
         catch (error) {
             console.error('courseApi/fetchCourses:', error);

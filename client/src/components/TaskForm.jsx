@@ -6,6 +6,7 @@ import taskService from '../api/taskApiService';
 function TaskForm({ task, content }) {
     const today=new Date();
     const [error,setError]= useState("");
+    const [success,setSuccess]= useState("");
     const { register, getValues, setValue, watch, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             title: "",
@@ -27,14 +28,18 @@ function TaskForm({ task, content }) {
         console.log(data);
         //task data save 
         setError("");
+        setSuccess("");
         try {
-            let succ=await taskService.addTask();
+            let succ=await taskService.addTask(data);
             if(!succ){
                 setError("Try Again!");
             }
+            else{
+                setSuccess(succ.message);
+            }
         } catch (error) {
             console.log("TaskForm/error:",error);
-            setError(error.message);
+            setError(error?.response?.data?.message);
         }
     }
     return (
@@ -163,6 +168,7 @@ function TaskForm({ task, content }) {
                     <button type="submit" className="dark:hover:bg-gray-900 dark:bg-gray-950 bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold 
             py-2 px-4 border dark:border-neutral-800 dark:hover:border-black border-blue-700 rounded text-md">Add {task}</button>
             {error.length>0 && <p className="text-red-500 text-center">{error}</p>}
+            {success && success.length>0 && <p className="text-green-500 text-center">{success}</p>}
                 </div>
             </form>
         </div>

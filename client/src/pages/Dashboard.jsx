@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Quote from '../components/Quote';
 import Table from '../components/Table';
 import { events } from '../Data/upcomingEvents';
-import { assignment } from '../Data/assignment';
+import useAssignments from '../Data/assignment';
 import { useDispatch, useSelector } from 'react-redux';
 import { courses as courseApi } from '../store/courseSlice';
 import { tasks } from '../store/taskSlice';
@@ -26,7 +26,8 @@ function Dashboard() {
   const { course, loading:loading1, error:error1 } = useSelector((state) => state.course);
   const { task, loading:loading2, error:error2 } = useSelector((state) => state.task);
   const { keys, data }=useCourses();
-  console.log("data:",data);
+  const assignment=useAssignments();
+  console.log("data:",assignment);
 
   const fetchFirst=()=>{
     dispatch(courseApi());//await
@@ -92,12 +93,12 @@ function Dashboard() {
           </aside>
         </div>
         <div className='w-full rounded-md'>
-          <div className=''>
+          <div className='overflow-x-auto'>
                 {/* <h1 className='text-center'>Welcome</h1> */}
                 <div>
                   <Table title={"Upcoming Events"} graph={false} keys={events.keys} data={events.data}/>
                   <Table title={"Current Courses"} keys={keys} data={data} label={"coursecode"} value={"credit"} />
-                  <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data} label={"id"} value={"points"}/>
+                  <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data} label={"chaptername"} value={"chapterno"}/>
                 </div>
           </div>
           <Quote />

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
-import TableHead from '../components/TableHead';
 import useCourses from '../Data/courses';
 import courseService from '../api/courseApiService';
+import TableHead from '../components/TableHead';
 
 function Courses() {
+  const [addForm,setAddForm]=useState(false);
+
   const { register, handleSubmit, formState: { errors }, watch, } = useForm({
     defaultValues: {
       name: "",
@@ -61,7 +63,7 @@ function Courses() {
 
   return (
     <div>
-      <div className="form">
+      {addForm && <div className="form">
         <form onSubmit={handleSubmit(dataSubmit)} className='pt-6 pb-2 px-4 flex flex-col justify-center items-center'>
           <h1 className='font-serif dark:text-gray-300 text-darken text-xl font-bold text-center text-gray-900 mb-3'>New Course</h1>
           <div className='flex flex-col items-center border px-4 pb-3 border-gray-400 rounded-md dark:border-gray-700 dark:bg-gray-950'>
@@ -99,9 +101,9 @@ function Courses() {
             </div>
           </div>
         </form>
-      </div>
+      </div>}
       <div className="table w-full">
-        <TableHead title={"Courses"} keys={keys} list={data} delFunction={deleteCourse} editFunction={editCourse}/>
+        <TableHead title={"Courses"} keys={keys} list={data} delFunction={deleteCourse} editFunction={editCourse} buttonstate={addForm} buttonFunc={()=>setAddForm((prev)=>!prev)}/>
       </div>
     </div>
   )
