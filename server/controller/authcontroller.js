@@ -75,7 +75,7 @@ export const login = asynchandler(async (req, res, next) => {
     // console.log(requser);
     return next(new ApiError('Password is incorrect', 400));
   }
-
+  requser.password = undefined;
   const { acesstoken, refreshtoken } = createrefreshandacesstoken(requser.id);
 
   if (!acesstoken || !refreshtoken) {
@@ -86,15 +86,14 @@ export const login = asynchandler(async (req, res, next) => {
   const options = {
     httpOnly: true, 
     secure: false,
+    sameSite: 'Lax'
   }
+  
+  res.cookie('acesstoken', acesstoken, options)
+  .cookie('refreshtoken', refreshtoken, options)
+
 
   res.status(201)
-    .cookie(
-      'acesstoken', acesstoken, options
-    )
-    .cookie(
-      'refreshtoken', refreshtoken, options
-    )
     .json({
       message: 'User login succesfully',
       data: {
@@ -110,15 +109,13 @@ export const protect = asynchandler(async (req, res, next) => {
 
   const test_token = req.headers.authorization;
 
-  // console.log(req.headers.authorization);
-
   let acesstoken, refreshtoken;
   if (test_token && test_token.startsWith('Bearer')) {
     acesstoken = test_token.split(' ')[1];
     refreshtoken = test_token.split(' ')[2];
   } else {
-    acesstoken = req.cookies.acesstoken;
-    refreshtoken = req.cookies.refreshtoken;
+    acesstoken = req.cookies?.acesstoken;
+    refreshtoken = req.cookies?.refreshtoken;
   }
 
   console.log(refreshtoken);

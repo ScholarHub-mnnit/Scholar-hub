@@ -6,6 +6,7 @@ class ApiService{
         this.api = axios.create({
           baseURL: baseUrl+"auth/",
           timeout: 5000,
+          withCredentials: true,
     });
     }
 
