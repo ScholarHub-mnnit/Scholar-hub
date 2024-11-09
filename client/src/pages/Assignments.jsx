@@ -4,6 +4,8 @@ import useAssignments from '../Data/assignment'
 import taskService from '../api/taskApiService'
 import TableHead from '../components/TableHead';
 import { useDispatch } from 'react-redux';
+import { tasks } from '../store/taskSlice'
+import YYYYMMDD from '../utility/YYYYMMDD';
 
 function Assignments() {
   const dispatch=useDispatch();
@@ -14,7 +16,7 @@ function Assignments() {
     //delete code
     try {
       await taskService.deleteTask(entity);
-      dispatch(courses());
+      dispatch(tasks());
       // use toaster later
     } catch (error) {
       console.log("Assignments/delete/error:",error);
@@ -27,8 +29,10 @@ function Assignments() {
   const editAssignment=async(entity)=>{
     //edit code
     try {
-      await taskService.updateTask(entity);
-      dispatch(courses());
+      let obj={...entity, deadline:YYYYMMDD(entity.deadline)};
+      console.log(obj);
+      await taskService.updateTask(obj);
+      dispatch(tasks());
     } catch (error) {
       console.log("Assignments/edit/error:",error);
       throw error;

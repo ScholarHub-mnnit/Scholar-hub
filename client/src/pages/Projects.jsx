@@ -11,7 +11,7 @@ function Projects() {
     let data = useSelector((state) => state.task.task);
     data=data.filter((item)=>item.tasktype==='Project');
     const keys=[
-                "chaptername",
+                // "chaptername",
                 "title",
                 "deadline",
             ]; // Static keys for the table
@@ -21,8 +21,9 @@ function Projects() {
   const updateData=async(entity)=>{
     //update code
     try {
-      await taskService.updateTask(entity);
-      dispatch(tasks());
+      let obj={...entity, deadline:YYYYMMDD(entity.deadline)};
+      console.log(obj);
+      await taskService.updateTask(obj);
     } catch (error) {
       console.log("Projects/update/error:",error);
       throw error;
@@ -45,7 +46,7 @@ function Projects() {
     <div className=''>
       {addForm && <TaskForm task={"Project"} content={"Project"}/>}
       <div className="data">
-        {addForm && <TableHead title={"Projects"} editFunction={updateData} buttonstate={addForm} buttonFunc={()=>setAddForm((prev)=>!prev)} list={data} keys={keys} delFunction={deleteTask}/>}
+         <TableHead title={"Projects"} editFunction={updateData} buttonstate={addForm} buttonFunc={()=>setAddForm((prev)=>!prev)} list={data} keys={keys} delFunction={deleteTask}/>
       </div>
     </div>
   )

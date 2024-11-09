@@ -27,7 +27,7 @@ function Dashboard() {
   const { course, loading:loading1, error:error1 } = useSelector((state) => state.course);
   const { task, loading:loading2, error:error2 } = useSelector((state) => state.task);
   const { keys, data }=useCourses();
-  const assignment=useAssignments();
+  const {keys:assignkeys, data:assignment,total, totalData}=useAssignments();
   console.log("data:",assignment);
 
   const fetchFirst=()=>{
@@ -83,8 +83,8 @@ function Dashboard() {
                 </Link>
                 <Link to={"/projects"}><li className='cursor-pointer hover:bg-blue-600 dark:hover:bg-gray-800  px-2 py-1 rounded-md flex items-center '><BsPersonWorkspace /><span className='hidden sm:block sm:px-2'>Projects</span></li>
                 </Link>
-                <Link to={"/achievements"}><li className='cursor-pointer hover:bg-blue-600 dark:hover:bg-gray-800  px-2 py-1 rounded-md flex items-center '><GiAchievement /><span className='hidden sm:block sm:px-2'>Achievements</span></li>
-                </Link>
+                {/* <Link to={"/achievements"}><li className='cursor-pointer hover:bg-blue-600 dark:hover:bg-gray-800  px-2 py-1 rounded-md flex items-center '><GiAchievement /><span className='hidden sm:block sm:px-2'>Achievements</span></li>
+                </Link> */}
                 <Link to={"/goals"}><li className='cursor-pointer hover:bg-blue-600 dark:hover:bg-gray-800  px-2 py-1 rounded-md flex items-center sm:hidden'><GiStairsGoal /></li>
                 </Link>
                 <Link to={"/rewards"}><li className='cursor-pointer hover:bg-blue-600 dark:hover:bg-gray-800  px-2 py-1 rounded-md flex items-center sm:hidden'><MdStars /></li>
@@ -98,8 +98,8 @@ function Dashboard() {
                 {/* <h1 className='text-center'>Welcome</h1> */}
                 <div>
                   <Table title={"Upcoming Events"} graph={false} keys={events.keys} data={events.data}/>
-                  <Table title={"Current Courses"} add='/courses' keys={keys} data={data} label={"coursecode"} value={"credit"} />
-                  <Table title={"Assignments Overview"} add='/assignments' keys={assignment?.keys} data={assignment?.data} label={"chaptername"} value={"chapterno"}/>
+                  <Table title={"Current Courses"} add='/courses' keys={keys} data={data} label={"coursecode"} value={"credit"} chartInfo={data} />
+                  <Table title={"Assignments Overview"} chartInfo={totalData} add='/assignments' keys={assignkeys} data={assignment} label={"label"} value={"data"}/>
                 </div>
           </div>
           <Quote />

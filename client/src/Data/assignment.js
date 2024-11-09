@@ -3,13 +3,17 @@ import { useSelector } from "react-redux";
 const useAssignments = () => {
   let assignment = useSelector((state) => state.task.task);
   assignment = assignment.filter((item) => item?.tasktype === 'Assignment');
+  const assignPending=assignment.filter((item) => item?.status === 'Pending');
+  const assignOverdue=assignment.filter((item) => item?.status === 'OverDue');
+  const assignCompleted=assignment.filter((item) => item?.status === 'Completed');
+  const total=assignment.length;const totalData=[{label:"Pending",data:assignPending.length}, {label:"Overdue",data:assignOverdue.length},{label:"Completed",data:assignCompleted.length}];
   const keys = [
     "title",
     "status",
     "deadline",
   ]; // Static keys for the table
 
-  return { keys, data: assignment };
+  return { keys, data: assignment ,total, totalData};
 };
 
 export default useAssignments;

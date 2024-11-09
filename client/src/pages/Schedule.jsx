@@ -1,8 +1,11 @@
 import React from 'react'
+import Calendar from '../components/Calendar'
 
 function Schedule() {
   return (
-    <div>Schedule</div>
+    <div>
+      <Calendar/>
+    </div>
   )
 }
 

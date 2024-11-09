@@ -20,8 +20,9 @@ function Lectures() {
   const updateData=async(entity)=>{
     //edit error
     try {
-      await taskService.updateTask(entity);
-      dispatch(tasks());
+      let obj={...entity, deadline:YYYYMMDD(entity.deadline)};
+      console.log(obj);
+      await taskService.updateTask(obj);
     } catch (error) {
       console.log("Lectures/update/error:",error);
       throw error;

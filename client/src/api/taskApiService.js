@@ -22,6 +22,7 @@ class TaskService {
     }
     async addTask(data) {
         try {
+            console.log(data);
             const response = await this.api.post('add', data);
             // console.log(response)
             return response?.data;
@@ -33,7 +34,7 @@ class TaskService {
     }
     async updateTask(data) {
         try {
-            const response = await this.api.patch(`update/${data?._id || data?.id}`, data);
+            const response = await this.api.patch(`update/${data?._id}`, data);
             return response?.data;//updated task
         }
         catch(error){

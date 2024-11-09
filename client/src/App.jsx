@@ -21,7 +21,7 @@ function App() {
             <Route path='assignments' element={<Auth><Assignments/></Auth>}/>
             <Route path='lectures' element={<Auth><Lectures/></Auth>}/>
             <Route path='projects' element={<Auth><Projects/></Auth>}/>
-            <Route path='achievements' element={<Auth><Achievements/></Auth>}/>
+            {/* <Route path='achievements' element={<Auth><Achievements/></Auth>}/> */}
             <Route path='rewards' element={<Auth><Rewards/></Auth>}/>
           </Route>
           <Route path='*' element={<NotFound/>}/>

@@ -138,7 +138,7 @@ function TaskForm({ task, content }) {
                             >
                                 <option value="Completed">Completed</option>
                                 <option value="Pending">Pending</option>
-                                <option value="Overdue">Overdue</option>
+                                <option value="OverDue">OverDue</option>
                             </select>
                         </div>
 
@@ -163,7 +163,12 @@ function TaskForm({ task, content }) {
                             <label htmlFor="goaltype" className="block mx-2 text-gray-900 dark:text-gray-400 text-md font-bold text-nowrap">Goal Type: </label>
                             <select
                                 id="goaltype"
-                                {...register('goaltype')}
+                                {...register('goaltype',{
+                                    required:{
+                                        value: goals===true,
+                                        message: "Goal type is required!"
+                                    }
+                                })}
                                 className='py-2 px-3 shadow text-black dark:text-gray-200 dark:bg-gray-950  dark:border-neutral-800 border border-gray-300 rounded '
                             >
                                 <option value="Daily">Daily</option>

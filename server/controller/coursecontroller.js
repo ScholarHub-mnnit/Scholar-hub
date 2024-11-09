@@ -103,7 +103,7 @@ export const updatecourse = asynchandler(async (req, res, next) => {
       coursecode,
       credit,
     },
-    { new: true }
+    { new: true, runValidators:true }
   );
   // console.log(updated);
   res.status(201).json({
