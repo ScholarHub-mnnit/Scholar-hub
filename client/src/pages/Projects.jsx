@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 import TaskForm from '../components/TaskForm'
 import TableHead from '../components/TableHead'
 import taskService from '../api/taskApiService'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { tasks } from '../store/taskSlice';
+
 
 function Projects() {
-  
+    const dispatch=useDispatch();
     let data = useSelector((state) => state.task.task);
     data=data.filter((item)=>item.tasktype==='Project');
     const keys=[
                 "chaptername",
                 "title",
                 "deadline",
-                "chapterno"
             ]; // Static keys for the table
   
   const [addForm,setAddForm]=useState(false);
@@ -21,6 +22,7 @@ function Projects() {
     //update code
     try {
       await taskService.updateTask(entity);
+      dispatch(tasks());
     } catch (error) {
       console.log("Projects/update/error:",error);
       throw error;
@@ -31,6 +33,7 @@ function Projects() {
     //delete code
     try {
       await taskService.deleteTask(entity);
+      dispatch(tasks());
     } catch (error) {
       console.log("Projects/delete/error:",error);
       throw error;
@@ -42,7 +45,7 @@ function Projects() {
     <div className=''>
       {addForm && <TaskForm task={"Project"} content={"Project"}/>}
       <div className="data">
-        {addForm && <TableHead title={"Projects"} editFunction={updateData} buttonstate={addForm} buttonFunc={()=>setAddForm((prev)=>!prev)} list={data} keys={keys}/>}
+        {addForm && <TableHead title={"Projects"} editFunction={updateData} buttonstate={addForm} buttonFunc={()=>setAddForm((prev)=>!prev)} list={data} keys={keys} delFunction={deleteTask}/>}
       </div>
     </div>
   )

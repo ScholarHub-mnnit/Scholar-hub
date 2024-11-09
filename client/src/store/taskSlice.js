@@ -28,7 +28,8 @@ export const taskSlice = createSlice({
                 const data = action.payload;
                 state.task = data.map((item) => ({
                     ...item, // Spread the rest of the properties of the item
-                    deadline: formatDate(item.deadline) // Format the deadline
+                    deadline: formatDate(item.deadline), // Format the deadline
+                    date:formatDate(item.duration),
                 }));
             })
             .addCase(tasks.rejected, (state, action) => {

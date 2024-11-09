@@ -18,7 +18,7 @@ function TaskForm({ task, content }) {
             chapterno: 0,
             chaptername: "",
             coursecode:"",
-            duration: null,
+            date: today.toLocaleDateString(),
             status: "Pending",
             remark: "",
             setgoal: false,
@@ -74,22 +74,19 @@ function TaskForm({ task, content }) {
 
                         {type === 'Lectures' ? <div className='m-2'>
                             <Input
-                                label={"Duration"}
-                                placeholder={"in hours..."}
-                                id="duration"
+                                label={"Date"}
+                                id="date"
+                                type="date"
                                 {...register('duration',
                                     {
                                         required: {
                                             value: type==='Lectures',
-                                            message: 'Duration field is required!'
+                                            message: 'Date field is required!'
                                         },
-                                        pattern: {
-                                            value: /^[1-9]\d*$/,
-                                            message: 'Please enter a valid integer'
-                                        }
                                     }
                                 )}
                             />
+                            {errors?.duration && <p className="text-red-500 text-center">{errors.duration.message}</p>}
                         </div>
                             :
                             <div className='flex  justify-between items-center '>
