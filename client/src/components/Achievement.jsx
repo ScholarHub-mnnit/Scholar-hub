@@ -14,7 +14,7 @@ const Achievement = () => {
   return (
     <div className="overflow-x-auto bg-white dark:bg-gray-800 p-1 rounded-sm shadow-lg">
       <table className="min-w-full text-sm text-left text-gray-700 dark:text-gray-200">
-        <thead className="bg-gray-100 dark:bg-gray-700">
+        <thead className="bg-gray-100 dark:bg-gray-950">
           <tr>
             <th className="px-6 py-3 font-semibold text-gray-900 dark:text-gray-100">Achievement</th>
             <th className="px-6 py-3 font-semibold text-gray-900 dark:text-gray-100">Category</th>
