@@ -55,7 +55,7 @@ export const addtask = asynchandler(async (req, res, next) => {
     deadline,
     duration,
     coursecode,
-    status
+    status,
   } = req.body;
 
   if (!title || !tasktype || !(deadline || duration)) {
@@ -141,11 +141,7 @@ export const updatetask = asynchandler(async (req, res, next) => {
       deadline,
       duration,
     },
-<<<<<<< HEAD
-    { new: true, runValidators:true }
-=======
     { new: true, runValidators: true }
->>>>>>> 541b1b808b4e90ccc74c020914345f87f632efb3
   );
 
   if (status && status === 'Completed' && prevstatus === 'Pending') {

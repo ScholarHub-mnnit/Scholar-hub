@@ -53,7 +53,9 @@ export const forgotpassword = async (req, res) => {
 
     //passowrd-reset logic
 
-    res.status(200).json({ message: 'Password reset instructions sent to your email' });
+    res
+      .status(200)
+      .json({ message: 'Password reset instructions sent to your email' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -85,4 +87,3 @@ export const deleteme = asynchandler(async (req, res, next) => {
 });
 
 export const getall = asynchandler(async (req, res, next) => {});
->>>>>>> 541b1b808b4e90ccc74c020914345f87f632efb3
