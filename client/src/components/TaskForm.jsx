@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Input from './Input';
 import taskService from '../api/taskApiService';
 import { useDispatch } from 'react-redux';
-import { tasks } from '../store/taskSlice'
+import { tasks } from '../store/taskSlice';
 
 function TaskForm({ task, content }) {
     const dispatch=useDispatch();
@@ -14,11 +14,11 @@ function TaskForm({ task, content }) {
         defaultValues: {
             title: "",
             tasktype: content,//page task type
-            deadline: today.toLocaleDateString(),
+            deadline: today,
             chapterno: 0,
             chaptername: "",
             coursecode:"",
-            date: today.toLocaleDateString(),
+            date: today,
             status: "Pending",
             remark: "",
             setgoal: false,
