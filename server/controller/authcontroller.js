@@ -81,27 +81,29 @@ export const login = asynchandler(async (req, res, next) => {
   if (!acesstoken || !refreshtoken) {
     return next(new ApiError('Token cannot generated', 402));
   }
-
+  if (!requser.active) {
+    requser.active = true;
+    requser.save();
+  }
   console.log(req);
   const options = {
-    httpOnly: true, 
+    httpOnly: true,
     secure: false,
-    sameSite: 'Lax'
-  }
-  
-  res.cookie('acesstoken', acesstoken, options)
-  .cookie('refreshtoken', refreshtoken, options)
+    sameSite: 'Lax',
+  };
 
+  res
+    .cookie('acesstoken', acesstoken, options)
+    .cookie('refreshtoken', refreshtoken, options);
 
-  res.status(201)
-    .json({
-      message: 'User login succesfully',
-      data: {
-        user: requser,
-        acesstoken,
-        refreshtoken,
-      },
-    });
+  res.status(201).json({
+    message: 'User login succesfully',
+    data: {
+      user: requser,
+      acesstoken,
+      refreshtoken,
+    },
+  });
 });
 
 export const protect = asynchandler(async (req, res, next) => {
