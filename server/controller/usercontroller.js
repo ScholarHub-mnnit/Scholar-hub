@@ -1,31 +1,47 @@
-import bcrypt from 'bcrypt';
-import User from '../models/usermodel.js';
+import User from '../models/usermodel';
+import ApiError from '../utils/apierror';
+import asynchandler from '../utils/asynchandler';
 
-// Controller for updating user details
-export const update = async (req, res) => {
-  try {
-    const {_id, name, email, password } = req.body;
+const deletetheuser = asynchandler(async (id) => {
+  await User.findByIdAndDelete(id);
+});
 
-    const user = await User.findById(_id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+export const logout = asynchandler(async (req, res, next) => {
+  const options = {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'Lax',
+  };
+  res
+    .cookie('acesstoken', 'loggedout', options)
+    .res.cookie('refreshtoken', 'loggedout', options);
+  res.status(200).json({ status: 'success' });
+});
 
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 12);
-      user.password = hashedPassword;
-    }
-    if (name) user.name = name;
-    if (email) user.email = email;
-
-    await user.save();
-    res.status(200).json({ message: 'User updated successfully', user });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+export const update = asynchandler(async (req, res, next) => {
+  const { name, email, coolege, year, branch } = req.body;
+  const id = req.user._id;
+  const finduser = await User.findById(id);
+  if (!finduser) {
+    return next(new ApiError('User not found', 403));
   }
-};
+  const updateduser = await User.findByIdAndUpdate(
+    id,
+    {
+      name,
+      email,
+      coolege,
+      year,
+      branch,
+    },
+    { new: true }
+  );
+  res.status(201).json({
+    message: 'User Updated Sucessfully',
+    data: { updateduser },
+  });
+});
 
-// Controller for handling forgot password requests
 export const forgotpassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -43,43 +59,30 @@ export const forgotpassword = async (req, res) => {
   }
 };
 
-// Controller for logging out the user
-export const logout = (req, res) => {
-  try {
-    res.clearCookie('acesstoken');
-    res.clearCookie('refreshtoken');
-    res.status(200).json({ message: 'Logged out successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+export const getme = asynchandler(async (req, res, next) => {
+  const id = req.user._id;
+  const getuser = await User.findById(id);
+  if (!getuser) {
+    return next(new ApiError('User not found', 403));
   }
-};
+  res.status(201).json({
+    message: 'User fetched Successfully',
+    data: {
+      getuser,
+    },
+  });
+});
 
-// Controller to get the current user details
-export const getme = (req, res) => {
-  try {
-    const user = req.user; // from middleware  'auth middleware':protected
-    if (!user) {
-      return res.status(401).json({ message: 'User not authenticated' });
-    }
-
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+export const deleteme = asynchandler(async (req, res, next) => {
+  const id = req.user._id;
+  const finduser = await User.findByIdAndDelete(id);
+  if (!finduser) {
+    return next(new ApiError('Can,t deleted', 403));
   }
-};
+  finduser.active = false;
+  logout();
+  setTimeout(deletetheuser(finduser._id), 30 * 24 * 60 * 60 * 1000);
+});
 
-// Controller for deleting a user by ID
-export const deleteme = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
-  }
-};
+export const getall = asynchandler(async (req, res, next) => {});
+>>>>>>> 541b1b808b4e90ccc74c020914345f87f632efb3

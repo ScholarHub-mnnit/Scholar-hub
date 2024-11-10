@@ -103,7 +103,7 @@ export const updatecourse = asynchandler(async (req, res, next) => {
       coursecode,
       credit,
     },
-    { new: true, runValidators:true }
+    { new: true, runValidators: true }
   );
   // console.log(updated);
   res.status(201).json({
@@ -115,7 +115,7 @@ export const updatecourse = asynchandler(async (req, res, next) => {
 });
 
 export const delcourse = asynchandler(async (req, res, next) => {
-  console.log(req)
+  console.log(req);
   const course_id = req.params.id;
 
   const findcourse = await Course.findOne({ _id: course_id });
