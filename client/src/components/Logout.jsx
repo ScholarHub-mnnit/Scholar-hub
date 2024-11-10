@@ -1,10 +1,19 @@
 import React from 'react'
 import { persistor } from '../store';
+import userService from '../api/userApiService';
+import { useNavigate } from 'react-router-dom';
 
 function Logout() {
-    const logitout=()=>{
+    const navigate=useNavigate();
+    const logitout=async()=>{
         //logout logic
-        persistor.purge();
+        try {
+            await userService.logout();
+            persistor.purge();
+            navigate('/');
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (
         <div>
